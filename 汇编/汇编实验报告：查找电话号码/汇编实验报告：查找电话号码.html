@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=Edge"/><link rel="stylesheet" type="text/css" href="../css/modern-norm.min.css"/><link rel="stylesheet" type="text/css" href="../css/prism.min.css"/><link rel="stylesheet" type="text/css" href="../css/katex.min.css"/><link rel="stylesheet" type="text/css" href="../css/wolai.css"/><title>汇编实验报告：查找电话号码 - wolai 笔记</title><link rel="shortcut icon" href="data:image/svg+xml,%3Csvg xmlns=&apos;http://www.w3.org/2000/svg&apos; viewBox=&apos;0 0 800 800&apos;%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill:%23fff;%7D%3C/style%3E%3C/defs%3E%3Cg%3E%3Cpath class=&apos;cls-1&apos; d=&apos;M610.08,0c66,0,90,6.88,114.13,19.79a134.62,134.62,0,0,1,56,56l2.28,4.4C793.93,103,800,127.88,800,189.92V610.08l-.08,11.56c-.78,57.38-7.58,79.89-19.71,102.57a134.62,134.62,0,0,1-56,56l-4.4,2.28C697,793.93,672.12,800,610.08,800H189.92l-11.56-.08c-57.38-.78-79.89-7.58-102.57-19.71a134.62,134.62,0,0,1-56-56l-2.28-4.4C6.44,697.75.4,673.72,0,616L0,189.92c0-66,6.88-90,19.79-114.13a134.62,134.62,0,0,1,56-56l4.4-2.28C102.25,6.44,126.28.4,184,0Z&apos;/%3E%3Cpath d=&apos;M610.08,0c66,0,90,6.88,114.13,19.79a134.62,134.62,0,0,1,56,56l2.28,4.4C793.93,103,800,127.88,800,189.92V610.08l-.08,11.56c-.78,57.38-7.58,79.89-19.71,102.57a134.62,134.62,0,0,1-56,56l-4.4,2.28C697,793.93,672.12,800,610.08,800H189.92l-11.56-.08c-57.38-.78-79.89-7.58-102.57-19.71a134.62,134.62,0,0,1-56-56l-2.28-4.4C6.44,697.75.4,673.72,0,616L0,189.92c0-66,6.88-90,19.79-114.13a134.62,134.62,0,0,1,56-56l4.4-2.28C102.25,6.44,126.28.4,184,0Zm4.72,88.9H185.2L172.42,89c-32.78.62-43.68,3.24-54.71,9.14a45.84,45.84,0,0,0-19.54,19.54c-6.61,12.36-9.11,24.55-9.27,67.49V614.8L89,627.58c.62,32.78,3.24,43.68,9.14,54.71a45.84,45.84,0,0,0,19.54,19.54c12.36,6.61,24.55,9.11,67.49,9.27H610.08c46.79,0,59.41-2.44,72.21-9.28a45.84,45.84,0,0,0,19.54-19.54c6.61-12.36,9.11-24.55,9.27-67.49V189.92c0-46.79-2.44-59.41-9.28-72.21a45.84,45.84,0,0,0-19.54-19.54C669.93,91.56,657.74,89.06,614.8,88.9ZM233.33,493.33A73.34,73.34,0,1,1,160,566.67,73.35,73.35,0,0,1,233.33,493.33Z&apos;/%3E%3C/g%3E%3C/svg%3E"></link></head><body><header><div class="image"></div><div class="title"><div class="banner"><div class="icon"></div></div><div data-title="汇编实验报告：查找电话号码" class="main-title"></div></div></header><article><div id="5SAkJamEFQtzJW3PJu9Z7q" class="wolai-block wolai-simple-table"><table><tbody><tr><td style="width: 176px"><span class="inline-wrap">实验内容：</span></td><td style="width: 531px"><span class="inline-wrap">查找电话号码</span></td></tr><tr><td style="width: 176px"><span class="inline-wrap">姓 名：</span></td><td style="width: 531px"><span class="inline-wrap">许愿</span></td></tr><tr><td style="width: 176px"><span class="inline-wrap">学 号：</span></td><td style="width: 531px"><span class="inline-wrap">8201210729</span></td></tr><tr><td style="width: 176px"><span class="inline-wrap">专业班级：</span></td><td style="width: 531px"><span class="inline-wrap">计算机科学与技术卓越人才培养 T2101</span></td></tr><tr><td style="width: 176px"><span class="inline-wrap">指导教师：</span></td><td style="width: 531px"><span class="inline-wrap">贺建飚</span></td></tr></tbody></table></div><h2 id="5uCWmD2JvUXRviAmgmbCz" class="wolai-block"><span class="inline-wrap"><b>一、</b></span><span class="inline-wrap"> </span><span class="inline-wrap"><b>设计说明</b></span></h2><h3 id="iC5BxT83HR1DdFAcLURD8h" class="wolai-block"><span class="inline-wrap">1.1</span><span class="inline-wrap"><b>程序</b></span><span class="inline-wrap">名：</span><span class="inline-wrap">查找电话号码 phone</span></h3><h3 id="4YUSQBvmDoJvXEEhAtG1sN" class="wolai-block"><span class="inline-wrap">1.2</span><span class="inline-wrap"><b>程序</b></span><span class="inline-wrap">功能</span></h3><div id="79tvcnvMP4fi4aYL6j6WT7" class="wolai-block wolai-text"><div><span class="inline-wrap">(1)要求程序建立一个可存放<span class="jill"></span>50<span class="jill"></span>项的电话号码表，每项包括人名（20<span class="jill"></span>个字符）及电话号码（8<span class="jill"></span>个字符）两部分；</span></div></div><div id="byUdNgcvbGtkZzSmhiNz6a" class="wolai-block wolai-text"><div><span class="inline-wrap">(2)程序可接收输入人名及相应的电话号码，并把它们加入电话号码表中；</span></div></div><div id="6U6B7PRNJ2UxoNg846fAW2" class="wolai-block wolai-text"><div><span class="inline-wrap">(3)凡有新的输入后，程序应按人名对电话号码表重新排序；</span></div></div><div id="4zg2To6vN4CzC8gcxtwPYD" class="wolai-block wolai-text"><div><span class="inline-wrap">(4)程序可接收需要查找电话号码的人名，并从电话号码表中查出其电话号码，再在屏幕上显示出来。</span></div></div><h3 id="7YmnEd5J8FrEttKs2p6gxk" class="wolai-block"><span class="inline-wrap">1.3 数据结构及主要符号</span></h3><code-block id="bMi7LHi2ZEbZ1PQQzaPuEF" class="wolai-block"><div class="wolai-pre"><div data-lang="6502 Assembly" class="marker"></div><pre>  输入_姓名提示：
+  mess1 db <span class="token string">'Input name:'</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+  输入_号码提示：
+  mess2 db <span class="token string">'Input a telephone number:'</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+  输入_查询提示：
+  mess3 db <span class="token string">'Do you want a telephone number?(Y/N)'</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+  查询_姓名提示：
+  mess4 db <span class="token string">'name?'</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token string">'$'</span> 
+  输出_表头：
+  mess5 db <span class="token string">'name'</span><span class="token punctuation">,</span><span class="token number">19</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'tel.'</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+  输出_报错：
+  mess6 db <span class="token string">'Not find!'</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+  换行：
+  findline db  <span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'$'</span><span class="token punctuation">;</span>回车 换行
+  
+  <span class="token punctuation">;</span>输入的姓名
+  namein label byte
+    maxNLen db <span class="token number">20</span>
+    <span class="token maybe-class-name">NLen</span> db <span class="token operator">?</span>
+    nam db <span class="token number">20</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token string">'$'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">;</span>输入的电话号码
+  phonein label byte
+    maxPLen db <span class="token number">10</span>
+    <span class="token maybe-class-name">PLen</span> db <span class="token operator">?</span>
+    phone db <span class="token number">10</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token string">'$'</span><span class="token punctuation">)</span>
+
+  <span class="token punctuation">;</span>待查询的姓名
+  temp_nam db <span class="token number">20</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span>
+
+  <span class="token punctuation">;</span>临时一条电话簿
+  temp_tab db <span class="token number">20</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">4</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">10</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+
+  <span class="token punctuation">;</span>电话簿中已有的数据量
+  num dw <span class="token number">0</span>
+  <span class="token punctuation">;</span>电话簿
+  tel_tab db <span class="token number">50</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token number">20</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">4</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">10</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'$'</span><span class="token punctuation">)</span>
+</pre></div></code-block><h3 id="mHtpZPD3hLqe6kkoQm54h1" class="wolai-block"><span class="inline-wrap">1.4 算法说明</span></h3><div id="nEnC4sV4MjXjG1Mik8ADfj" class="wolai-block wolai-text"><div><span class="inline-wrap">本程序输入姓名与手机号后，会将信息暂存到<span class="jill"></span>temp_tel<span class="jill"></span>中，再利用插入排序，将临时的信息插入到电话表<span class="jill"></span>tel_tab<span class="jill"></span>中，并顺序遍历电话表，来查询到相应的号码。</span></div></div><h3 id="6L5bQBpZknbmigYttth1fn" class="wolai-block"><span class="inline-wrap">1.5 模块层次图及说明</span></h3><div id="iKownyF7SykQhum7JKiXDZ" class="wolai-row"><div id="mgKKZHonPPWE977Vvz5if8" class="wolai-col" style="flex-grow: 0.6041666666666666"><div id="wuQwQ1UCpxy6ZuqzXtP8EP" class="wolai-block wolai-text"><div><span class="inline-wrap">main:</span></div><div id="voLRKcvn13QSU8csLP5RhE" class="wolai-block wolai-text"><div><span class="inline-wrap">input<span class="jill"></span>输入模块；</span></div><div id="5aj8wmdSVKz3Bp5JSedSJv" class="wolai-block wolai-text"><div><span class="inline-wrap">clear 清空各临时变量；</span></div></div><div id="eJjP8N1JFDmaoFuBEq4TPA" class="wolai-block wolai-text"><div><span class="inline-wrap">input_name<span class="jill"></span>接收人名；</span></div></div><div id="rBC718sG6qo2mNnF2jqae3" class="wolai-block wolai-text"><div><span class="inline-wrap">store_name 把人名存入电话号码表<span class="jill"></span>tel</span><span class="inline-wrap">_</span><span class="inline-wrap">tab<span class="jill"></span>中；</span></div></div><div id="hr2RcNcd1qc5ykMYNphEXJ" class="wolai-block wolai-text"><div><span class="inline-wrap">input_phone<span class="jill"></span>接收电话号码，并把它存入电话号码表<span class="jill"></span>tel</span><span class="inline-wrap">_</span><span class="inline-wrap">tab<span class="jill"></span>中；</span></div></div><div id="ckKcUnF7zntkRDTi748H3T" class="wolai-block wolai-text"><div><span class="inline-wrap">name_sort<span class="jill"></span>子程序对电话号码表按人名排序；</span></div><div id="bTJpURSApzmybbqpLvarC4" class="wolai-block wolai-text"><div><span class="inline-wrap">insert 将<span class="jill"></span>temp_tab 中的电话号码插入 tel_tab<span class="jill"></span>中的对应位置</span></div></div></div></div><div id="bypScaUq52g8ut9iLZ9Yc7" class="wolai-block wolai-text"><div><span class="inline-wrap">query 查询模块；</span></div><div id="6LZFHoZ7uKLaSDjMdLdmxm" class="wolai-block wolai-text"><div><span class="inline-wrap">input_name<span class="jill"></span>接收人名：</span></div></div><div id="tgVJCWGxFiGfAdsVzbbTcE" class="wolai-block wolai-text"><div><span class="inline-wrap">name</span><span class="inline-wrap">_</span><span class="inline-wrap">query 在电话号码表中查找所要的电话号码；</span></div></div><div id="n9hLGUScXKxhPY2NtH99jt" class="wolai-block wolai-text"><div><span class="inline-wrap">printline 按要求格式显示人名及电话号码：</span></div></div></div></div></div><div id="uWGKQjxsMNNCJjxDa8ZVyi" class="wolai-col" style="flex-grow: 0.3958333333333333"><div id="5rKcxnTUyYUC37ntqYeAu1" class="wolai-block"><figure class="wolai-left" style="width: 100%"><img src="media/image.png" style="width: 371px"/></figure></div></div></div><h2 id="sWtLSML8DDuxxNNwqUtSSB" class="wolai-block"><span class="inline-wrap"><b>二、</b></span><span class="inline-wrap"> </span><span class="inline-wrap"><b>调试说明</b></span></h2><h3 id="3RFLaS3MnnPwYhNs9qE8td" class="wolai-block"><span class="inline-wrap">2.1</span><span class="inline-wrap"><b>实验结果</b></span></h3><div id="8xCkiJYSgSC5ZFy9D1Q3kJ" class="wolai-block"><figure class="wolai-center" style="width: 100%"><img src="media/image_1.png" style="width: 100%"/></figure></div><h3 id="5Z9SghKqGHmKofgVCwdoc4" class="wolai-block"><span class="inline-wrap">2.2</span><span class="inline-wrap"><b>实验调试</b></span></h3><div id="cgb1NftJXYXLXPYmnxngjY" class="wolai-block wolai-text"><div><span class="inline-wrap">由调试器我们可以看到，代码被存在<span class="jill"></span>0533<span class="jill"></span>段中，数据被存在<span class="jill"></span>04A0<span class="jill"></span>段中，栈数据被存在<span class="jill"></span>04A0<span class="jill"></span>段中。</span></div></div><div id="5hZ47gpvn6DLLGVHc8Hufr" class="wolai-block"><figure class="wolai-center" style="width: 100%"><img src="media/image_2.png" style="width: 100%"/></figure></div><div id="b27sZx57Fh4vQAFjUH8bpX" class="wolai-block wolai-text"><div><span class="inline-wrap">利用-d<span class="jill"></span>指令，我们可以查询到数据段</span></div></div><div id="fcnfSTM1udEK8aCHL9rdmd" class="wolai-block"><figure class="wolai-center" style="width: 100%"><img src="media/image_3.png" style="width: 100%"/></figure></div><div id="eoMs6JBbn55SP3MMMhsW3P" class="wolai-block"><figure class="wolai-center" style="width: 100%"><img src="media/image_4.png" style="width: 100%"/></figure></div><div id="53ukqjUdc4JjqP2GXgLjj4" class="wolai-block wolai-text"><div><span class="inline-wrap">运行完毕之后，我们不难发现，姓名与电话按照姓名字典升序被储存在了<span class="jill"></span>tel_tab<span class="jill"></span>中。</span></div></div><div id="t7QKMpE6ypnmBoceLsbtpn" class="wolai-block"><figure class="wolai-center" style="width: 100%"><img src="media/image_5.png" style="width: 100%"/></figure></div><h3 id="iLmzbdaVVZHwWrguV8JR2h" class="wolai-block"><span class="inline-wrap">2.3 问题与</span><span class="inline-wrap"><b>解决</b></span><span class="inline-wrap">方案</span></h3><h4 id="ddh2h9DuuiyLhfp6UFoquD" class="wolai-block"><span class="inline-wrap">2.3.1<span class="jill"></span>如何按照字典升序排列号码簿？</span></h4><div id="a8aJpUMoitjLkHTcRXUuBk" class="wolai-block wolai-text"><div><span class="inline-wrap">采用插入排序，先将待输入的号码和姓名暂存到临时变量，然后顺序比较电话簿，找到合适的插入位置，然后将待插入位置后面的信息依次往后挪一格位置，最后把待储存的电话信息插入到指定位置。</span></div></div><h2 id="pYZv4tD9LksPuDRMERm2p5" class="wolai-block"><span class="inline-wrap"><b>三、</b></span><span class="inline-wrap"> </span><span class="inline-wrap"><b>程序框图</b></span></h2><div id="uwsVUF1pcfi7dxYtyH297X" class="wolai-block"><figure class="wolai-center" style="width: 100%"><img src="media/image_6.png" style="width: 310px"/></figure></div><h2 id="w7Ga2MmwLBrc7emJKW8C77" class="wolai-block"><span class="inline-wrap"><b>四、</b></span><span class="inline-wrap"> </span><span class="inline-wrap"><b>程序清单</b></span></h2><div id="rXnbq9p7QQtUt3BuVCtJnj" class="wolai-block wolai-text"><div><span class="inline-wrap"><b>实验代码如下：</b></span></div></div><code-block id="hKZiwox8iWGfpCybumnhwY" class="wolai-block"><div class="wolai-pre"><div data-lang="6502 Assembly" class="marker"></div><pre>datas segment
+  mess1 db <span class="token string">'Input name:'</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+  mess2 db <span class="token string">'Input a telephone number:'</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+  mess3 db <span class="token string">'Do you want a telephone number?(Y/N)'</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+  mess4 db <span class="token string">'name?'</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token string">'$'</span> 
+  mess5 db <span class="token string">'name'</span><span class="token punctuation">,</span><span class="token number">19</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'tel.'</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+  mess6 db <span class="token string">'Not find!'</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+  findline db  <span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'$'</span><span class="token punctuation">;</span>回车 换行
+  
+  <span class="token punctuation">;</span>输入的姓名
+  namein label byte
+    maxNLen db <span class="token number">20</span>
+    <span class="token maybe-class-name">NLen</span> db <span class="token operator">?</span>
+    nam db <span class="token number">20</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token string">'$'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">;</span>输入的电话号码
+  phonein label byte
+    maxPLen db <span class="token number">10</span>
+    <span class="token maybe-class-name">PLen</span> db <span class="token operator">?</span>
+    phone db <span class="token number">10</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token string">'$'</span><span class="token punctuation">)</span>
+
+  <span class="token punctuation">;</span>待查询的姓名
+  temp_nam db <span class="token number">20</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span>
+
+  <span class="token punctuation">;</span>临时一条电话簿
+  temp_tab db <span class="token number">20</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">4</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">10</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+
+  <span class="token punctuation">;</span>电话簿中已有的数据量
+  num dw <span class="token number">0</span>
+  <span class="token punctuation">;</span>电话簿
+  tel_tab db <span class="token number">50</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token number">20</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">4</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">10</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'$'</span><span class="token punctuation">)</span>
+
+datas ends
+
+stacks segment
+    dw <span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span>
+    <span class="token maybe-class-name">SEnd</span> label db  
+stacks ends
+
+codes segment
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>main<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+main proc far
+    assume cs<span class="token operator">:</span>codes<span class="token punctuation">,</span>ds<span class="token operator">:</span>datas<span class="token punctuation">,</span>es<span class="token operator">:</span>datas     
+start<span class="token operator">:</span>
+  <span class="token punctuation">;</span>初始化栈
+  mov ax<span class="token punctuation">,</span>stacks
+  mov ss<span class="token punctuation">,</span>ax
+  mov sp<span class="token punctuation">,</span>offset <span class="token maybe-class-name">SEnd</span>
+
+  <span class="token punctuation">;</span>初始化代码段
+  mov ax<span class="token punctuation">,</span>datas
+  mov ds<span class="token punctuation">,</span>ax
+        
+  <span class="token punctuation">;</span>初始化拓展段
+  mov es<span class="token punctuation">,</span>ax
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>输入<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+input<span class="token operator">:</span>
+  <span class="token punctuation">;</span>输入名字
+    <span class="token punctuation">;</span>输出 提示符
+    lea dx<span class="token punctuation">,</span>mess1
+    mov ah<span class="token punctuation">,</span><span class="token number">09</span>h
+    int <span class="token number">21</span>h
+
+    <span class="token punctuation">;</span>清空各个临时变量
+    call clear
+
+    <span class="token punctuation">;</span>输入名字
+    call input_name
+
+    <span class="token punctuation">;</span>如果没有输入就退出
+    cmp <span class="token maybe-class-name">NLen</span><span class="token punctuation">,</span><span class="token number">0</span>
+    je query
+
+    <span class="token punctuation">;</span>储存名字
+    call store_name
+
+  <span class="token punctuation">;</span>输入电话号码
+    <span class="token punctuation">;</span>输出 提示符
+    lea dx<span class="token punctuation">,</span>mess2
+    mov ah<span class="token punctuation">,</span><span class="token number">09</span>h
+    int <span class="token number">21</span>h
+    <span class="token punctuation">;</span>输入 电话号码
+    call input_phone
+    call name_sort
+
+    jmp input
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>输入<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>查询<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+query<span class="token operator">:</span>
+
+  <span class="token punctuation">;</span>是否继续查询
+    <span class="token punctuation">;</span>输出 提示是否进行查询
+    mov ah<span class="token punctuation">,</span><span class="token number">09</span>
+    lea dx<span class="token punctuation">,</span>mess3
+    int <span class="token number">21</span>h
+
+    <span class="token punctuation">;</span>输入 <span class="token constant">Y</span><span class="token operator">/</span><span class="token constant">N</span>
+    mov ah<span class="token punctuation">,</span><span class="token number">01</span>h
+    int <span class="token number">21</span>h
+
+    <span class="token punctuation">;</span><span class="token keyword control-flow">if</span> <span class="token constant">N</span>
+    cmp al<span class="token punctuation">,</span><span class="token string">'N'</span>
+      je exit
+
+  <span class="token punctuation">;</span>换行
+    mov dx<span class="token punctuation">,</span>offset findline 
+    mov  ah<span class="token punctuation">,</span><span class="token number">09</span>
+    int <span class="token number">21</span>h 
+
+  <span class="token punctuation">;</span>输入 名字
+    <span class="token punctuation">;</span>输出 提示符
+    mov ah<span class="token punctuation">,</span><span class="token number">09</span>
+    lea dx<span class="token punctuation">,</span>mess4
+    int <span class="token number">21</span>h
+    <span class="token punctuation">;</span>输入 名字
+      call input_name
+    <span class="token punctuation">;</span><span class="token keyword control-flow">if</span> 没有输入 <span class="token operator">-</span><span class="token operator">></span> 退出
+    cmp <span class="token maybe-class-name">NLen</span><span class="token punctuation">,</span><span class="token number">0</span>
+    je exit
+  <span class="token punctuation">;</span>查询
+    call name_query
+  <span class="token punctuation">;</span>输出
+    call printline
+
+    jmp query
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>查询<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+exit<span class="token operator">:</span>
+    mov ah<span class="token punctuation">,</span><span class="token number">4</span>ch
+    int <span class="token number">21</span>h
+main endp
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>main<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+
+
+input_name proc near
+<span class="token punctuation">;</span>输入名字 <span class="token operator">-</span><span class="token operator">></span> namein
+    lea dx<span class="token punctuation">,</span>namein
+    mov ah<span class="token punctuation">,</span><span class="token number">10</span>
+    int <span class="token number">21</span>h
+
+    mov dx<span class="token punctuation">,</span>offset findline 
+    mov  ah<span class="token punctuation">,</span><span class="token number">09</span>
+    int <span class="token number">21</span>h
+
+    ret
+input_name endp
+
+
+store_name proc near
+<span class="token punctuation">;</span>copy name to temp_tab
+  <span class="token punctuation">;</span><span class="token keyword control-flow">if</span> <span class="token maybe-class-name">Nlen</span><span class="token operator">==</span><span class="token number">0</span> <span class="token operator">-</span><span class="token operator">></span> exit
+    cmp <span class="token maybe-class-name">NLen</span><span class="token punctuation">,</span><span class="token number">0</span>
+    je exit1
+
+  <span class="token punctuation">;</span>原串
+    lea si<span class="token punctuation">,</span>nam
+  <span class="token punctuation">;</span>目标串
+    lea di<span class="token punctuation">,</span>temp_tab
+  <span class="token punctuation">;</span>cx
+    sub ch<span class="token punctuation">,</span>ch
+    mov cl<span class="token punctuation">,</span><span class="token maybe-class-name">NLen</span>
+  <span class="token punctuation">;</span>清空
+    cld
+
+  <span class="token punctuation">;</span>自动复制字符串
+    rep movsb
+  
+exit1<span class="token operator">:</span>
+    ret
+store_name endp
+
+
+
+input_phone proc near
+<span class="token punctuation">;</span>输入phone 并且 和 name合并到临时串中
+  <span class="token punctuation">;</span>输入
+    lea dx<span class="token punctuation">,</span>phonein
+    mov ah<span class="token punctuation">,</span><span class="token number">10</span>
+    int <span class="token number">21</span>h
+
+    cmp <span class="token maybe-class-name">PLen</span><span class="token punctuation">,</span><span class="token number">0</span>
+    je exit2
+
+  <span class="token punctuation">;</span>换行
+    mov dx<span class="token punctuation">,</span>offset findline 
+    mov  ah<span class="token punctuation">,</span><span class="token number">09</span>
+    int <span class="token number">21</span>h  
+
+  <span class="token punctuation">;</span>原串 
+    lea si<span class="token punctuation">,</span>phone
+  <span class="token punctuation">;</span>目标串
+    lea di<span class="token punctuation">,</span>temp_tab
+    add di<span class="token punctuation">,</span><span class="token number">23</span><span class="token punctuation">;</span>和 name合并
+  <span class="token punctuation">;</span>cx
+    sub ch<span class="token punctuation">,</span>ch
+    mov cl<span class="token punctuation">,</span><span class="token maybe-class-name">PLen</span>
+  <span class="token punctuation">;</span>清空
+    cld
+
+  <span class="token punctuation">;</span>自动复制字符串
+    rep movsb
+exit2<span class="token operator">:</span>
+    ret
+input_phone endp
+
+name_sort proc near
+<span class="token punctuation">;</span>插入排序
+  <span class="token punctuation">;</span><span class="token keyword control-flow">if</span><span class="token punctuation">(</span>num<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span>
+    cmp num<span class="token punctuation">,</span><span class="token number">0</span>
+    <span class="token punctuation">;</span>查询插入位置，并插入
+    <span class="token punctuation">;</span>插入排序
+      jnz sort
+  <span class="token punctuation">;</span><span class="token keyword control-flow">else</span>
+    <span class="token punctuation">;</span>直接插入
+    lea si<span class="token punctuation">,</span>temp_tab
+    lea di<span class="token punctuation">,</span>tel_tab
+    mov cx<span class="token punctuation">,</span><span class="token number">37</span><span class="token punctuation">;</span>要传送的数据段长度
+    cld
+    repz movsb
+    jmp exit3
+
+sort<span class="token operator">:</span>
+
+  <span class="token punctuation">;</span>待插入的串
+    lea si<span class="token punctuation">,</span>temp_tab
+  <span class="token punctuation">;</span>当前比较项（从头开始）
+    lea di<span class="token punctuation">,</span>tel_tab
+
+    mov cx<span class="token punctuation">,</span>num
+comp<span class="token operator">:</span>
+    push di
+    push cx
+
+  <span class="token punctuation">;</span>比较姓名
+    mov cx<span class="token punctuation">,</span><span class="token number">20</span>
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>内循环<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+    repz cmpsb
+    <span class="token punctuation">;</span>如果si<span class="token operator">></span>di<span class="token punctuation">,</span>则使di指向下一个表项，继续循环
+    ja find_tab
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>内循环<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+
+  <span class="token punctuation">;</span>出口：如果比到了最后，说明这一条<span class="token operator">&lt;=</span>待插入项
+    pop cx
+    pop di
+    call insert
+    jmp exit3
+
+find_tab<span class="token operator">:</span>
+    pop cx
+    pop di
+
+    add di<span class="token punctuation">,</span><span class="token number">37</span>
+    lea si<span class="token punctuation">,</span>temp_tab
+
+loop comp
+
+  <span class="token punctuation">;</span>如果比到了最后，在最后插入
+    mov cx<span class="token punctuation">,</span><span class="token number">37</span>
+    rep movsb
+
+exit3<span class="token operator">:</span>
+    <span class="token punctuation">;</span>num<span class="token operator">++</span>
+    inc num
+    ret
+name_sort endp
+
+
+insert proc near
+<span class="token punctuation">;</span>找到位置后，插入
+  <span class="token punctuation">;</span>从当前表的最后一项开始一格一格往后挪
+    mov ax<span class="token punctuation">,</span>num
+  <span class="token punctuation">;</span>cx的初值由上一个程序带进来
+
+<span class="token punctuation">;</span>要把后面的数据都往后挪一格 也就是cx个
+loopinsert<span class="token operator">:</span>
+
+    push ax
+  <span class="token punctuation">;</span>计算待往后一格的数组的位置
+    <span class="token punctuation">;</span>计算偏移量
+      mov bx<span class="token punctuation">,</span><span class="token number">37</span>
+      <span class="token punctuation">;</span>ax<span class="token operator">=</span><span class="token function">bx</span><span class="token punctuation">(</span><span class="token number">37</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token function">ax</span><span class="token punctuation">(</span>num<span class="token punctuation">)</span>
+      mul bx
+    <span class="token punctuation">;</span>数组位置
+      lea di<span class="token punctuation">,</span>tel_tab
+    <span class="token punctuation">;</span>相加
+      add di<span class="token punctuation">,</span>ax
+  <span class="token punctuation">;</span>计算后一格的位置
+    mov si<span class="token punctuation">,</span>di
+    sub si<span class="token punctuation">,</span><span class="token number">37</span>
+  <span class="token punctuation">;</span>复制字符串
+    push cx
+
+    mov cx<span class="token punctuation">,</span><span class="token number">37</span>
+    rep movsb
+
+    pop cx
+    pop ax
+    dec ax
+    loop loopinsert
+  <span class="token punctuation">;</span>插入
+    <span class="token punctuation">;</span>源串地址
+    lea si<span class="token punctuation">,</span>temp_tab
+    <span class="token punctuation">;</span>目标串地址
+    lea di<span class="token punctuation">,</span>tel_tab
+    mov bx<span class="token punctuation">,</span><span class="token number">37</span>
+    mul bx
+    add di<span class="token punctuation">,</span>ax
+    <span class="token punctuation">;</span>次数
+    mov cx<span class="token punctuation">,</span><span class="token number">37</span>
+    <span class="token punctuation">;</span>复制
+    rep movsb
+    ret
+insert endp
+
+name_query proc near
+<span class="token punctuation">;</span>查询
+    call clear
+    mov ch<span class="token punctuation">,</span><span class="token number">0</span>
+    mov cl<span class="token punctuation">,</span><span class="token maybe-class-name">NLen</span>
+    lea si<span class="token punctuation">,</span>nam
+    lea di<span class="token punctuation">,</span>temp_nam<span class="token punctuation">;</span>name<span class="token operator">--</span><span class="token operator">></span>temp_nam
+    rep movsb
+    mov cx<span class="token punctuation">,</span>num<span class="token punctuation">;</span>搜寻名字循环次数
+    lea di<span class="token punctuation">,</span>tel_tab
+    lea si<span class="token punctuation">,</span>temp_nam
+loopfind<span class="token operator">:</span>
+
+    push di
+    push cx
+    mov ch<span class="token punctuation">,</span><span class="token number">0</span>
+    mov cl<span class="token punctuation">,</span><span class="token number">20</span>
+
+  <span class="token punctuation">;</span>比较字符串
+    repz cmpsb
+  <span class="token punctuation">;</span>出口 找到了 num<span class="token operator">-</span>cx
+    je found
+
+    pop cx
+    pop di
+  <span class="token punctuation">;</span>继续找
+    add di<span class="token punctuation">,</span><span class="token number">37</span>
+    lea si<span class="token punctuation">,</span>temp_nam
+    loop loopfind
+
+    mov cx<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">;</span>没找到
+    jmp exit4
+found<span class="token operator">:</span>
+    pop cx
+    pop di
+exit4<span class="token operator">:</span>
+    ret
+name_query endp
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+printline proc near
+<span class="token punctuation">;</span>输出
+  <span class="token punctuation">;</span><span class="token keyword control-flow">if</span><span class="token punctuation">(</span>找到）
+    cmp cx<span class="token punctuation">,</span><span class="token number">0</span>
+      jnz find
+    <span class="token punctuation">;</span><span class="token keyword control-flow">else</span><span class="token punctuation">(</span>未找到）
+    mov ah<span class="token punctuation">,</span><span class="token number">09</span>
+    lea dx<span class="token punctuation">,</span>mess6
+    int <span class="token number">21</span>h
+
+    jmp exit5
+find<span class="token operator">:</span>
+    lea dx<span class="token punctuation">,</span>mess5
+    mov ah<span class="token punctuation">,</span><span class="token number">09</span>
+    int <span class="token number">21</span>h
+  <span class="token punctuation">;</span>dx<span class="token operator">=</span>tel_tab<span class="token operator">+</span><span class="token punctuation">(</span>num<span class="token operator">-</span>cx<span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">37</span>
+    mov ax<span class="token punctuation">,</span>num
+    sub ax<span class="token punctuation">,</span>cx
+    mov bx<span class="token punctuation">,</span><span class="token number">37</span>
+    mul bx<span class="token punctuation">;</span>
+    lea dx<span class="token punctuation">,</span>tel_tab
+    add dx<span class="token punctuation">,</span>ax
+    mov ah<span class="token punctuation">,</span><span class="token number">09</span>
+    int <span class="token number">21</span>h
+exit5<span class="token operator">:</span>
+    ret
+printline endp
+
+clear proc near
+<span class="token punctuation">;</span>清空
+    lea di<span class="token punctuation">,</span>temp_tab
+    xor al<span class="token punctuation">,</span>al
+    mov cx<span class="token punctuation">,</span><span class="token number">32</span>
+    rep stosb
+    lea di<span class="token punctuation">,</span>temp_nam
+    xor al<span class="token punctuation">,</span>al
+    mov cx<span class="token punctuation">,</span><span class="token number">20</span>
+    rep stosb
+    ret
+clear endp
+
+codes ends
+    end start</pre></div></code-block></article><footer></footer></body></html>

@@ -1,0 +1,201 @@
+{
+  "main": {
+    "id": "b295107275324d86",
+    "type": "split",
+    "children": [
+      {
+        "id": "b926f54ffab93650",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b1b112be859feaa6",
+            "type": "leaf",
+            "state": {
+              "type": "surfing-view",
+              "state": {
+                "url": "file:///C:/Users/1/iCloudDrive/C%E8%AF%AD%E8%A8%80/c++/%E6%BA%90%E7%A0%81%E8%A1%A5%E7%A0%81%E5%8F%8D%E7%A0%81/%E6%BA%90%E7%A0%81%E8%A1%A5%E7%A0%81%E5%8F%8D%E7%A0%81.html"
+              }
+            }
+          },
+          {
+            "id": "133fbdcd89883ee6",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "概率论 (2)/事件关系与事件运算/事件关系与事件运算.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "7211c8cd82a1233e",
+            "type": "leaf",
+            "state": {
+              "type": "surfing-view",
+              "state": {
+                "url": "file:///C:/Users/1/iCloudDrive/C%E8%AF%AD%E8%A8%80/%E7%AE%97%E6%B3%95%E8%AF%BE%E5%A4%96%E6%80%9D%E8%80%83%E9%A2%98/o1%E6%97%B6%E9%97%B4%E7%9A%84%E6%A0%88/o1%E6%97%B6%E9%97%B4%E7%9A%84%E6%A0%88.html"
+              }
+            }
+          },
+          {
+            "id": "6f84c7e31f71ac15",
+            "type": "leaf",
+            "state": {
+              "type": "surfing-view",
+              "state": {
+                "url": "http://127.0.0.1:8000/basic/greedy/"
+              }
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "7926c628810f0bbe",
+    "type": "split",
+    "children": [
+      {
+        "id": "e6ac60772d6e00d2",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "512671139661645e",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "c784f381933e7630",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "e7de601c631b4fb1",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          },
+          {
+            "id": "e5ed4aa93778d95b",
+            "type": "leaf",
+            "state": {
+              "type": "surfing-tab-tree",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "9019904e644b781d",
+    "type": "split",
+    "children": [
+      {
+        "id": "7071c9d7cc26bd1d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "22a6fdbd3b4317d5",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "概率论 (2)/事件关系与事件运算/事件关系与事件运算.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "387a264b1bd0f62e",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "概率论 (2)/事件关系与事件运算/事件关系与事件运算.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "ca3c2597615c953b",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "41773a210c3dbc0e",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "概率论 (2)/事件关系与事件运算/事件关系与事件运算.md"
+              }
+            }
+          }
+        ],
+        "currentTab": 3
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false
+    }
+  },
+  "active": "133fbdcd89883ee6",
+  "lastOpenFiles": [
+    "概率论 (2)/概率论.md",
+    "002-01 并查集、树状数组.md",
+    "未命名.md",
+    "002-04 块状链表、后缀树.md",
+    "解题记录/POJ 1422 Air Raid/POJ 1422 Air Raid.md",
+    "解题记录/解题记录.md",
+    "解题记录 (1)/棋盘覆盖/棋盘覆盖.md",
+    "解题记录 (1)/解题记录.md",
+    "概率论 HTML/概率论.html",
+    "解题记录 (1)/POJ 1422 Air Raid/POJ 1422 Air Raid.md"
+  ]
+}

@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=Edge"/><link rel="stylesheet" type="text/css" href="../css/modern-norm.min.css"/><link rel="stylesheet" type="text/css" href="../css/prism.min.css"/><link rel="stylesheet" type="text/css" href="../css/katex.min.css"/><link rel="stylesheet" type="text/css" href="../css/wolai.css"/><title>汇编实验参考 - wolai 笔记</title><link rel="shortcut icon" href="data:image/svg+xml,%3Csvg xmlns=&apos;http://www.w3.org/2000/svg&apos; viewBox=&apos;0 0 800 800&apos;%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill:%23fff;%7D%3C/style%3E%3C/defs%3E%3Cg%3E%3Cpath class=&apos;cls-1&apos; d=&apos;M610.08,0c66,0,90,6.88,114.13,19.79a134.62,134.62,0,0,1,56,56l2.28,4.4C793.93,103,800,127.88,800,189.92V610.08l-.08,11.56c-.78,57.38-7.58,79.89-19.71,102.57a134.62,134.62,0,0,1-56,56l-4.4,2.28C697,793.93,672.12,800,610.08,800H189.92l-11.56-.08c-57.38-.78-79.89-7.58-102.57-19.71a134.62,134.62,0,0,1-56-56l-2.28-4.4C6.44,697.75.4,673.72,0,616L0,189.92c0-66,6.88-90,19.79-114.13a134.62,134.62,0,0,1,56-56l4.4-2.28C102.25,6.44,126.28.4,184,0Z&apos;/%3E%3Cpath d=&apos;M610.08,0c66,0,90,6.88,114.13,19.79a134.62,134.62,0,0,1,56,56l2.28,4.4C793.93,103,800,127.88,800,189.92V610.08l-.08,11.56c-.78,57.38-7.58,79.89-19.71,102.57a134.62,134.62,0,0,1-56,56l-4.4,2.28C697,793.93,672.12,800,610.08,800H189.92l-11.56-.08c-57.38-.78-79.89-7.58-102.57-19.71a134.62,134.62,0,0,1-56-56l-2.28-4.4C6.44,697.75.4,673.72,0,616L0,189.92c0-66,6.88-90,19.79-114.13a134.62,134.62,0,0,1,56-56l4.4-2.28C102.25,6.44,126.28.4,184,0Zm4.72,88.9H185.2L172.42,89c-32.78.62-43.68,3.24-54.71,9.14a45.84,45.84,0,0,0-19.54,19.54c-6.61,12.36-9.11,24.55-9.27,67.49V614.8L89,627.58c.62,32.78,3.24,43.68,9.14,54.71a45.84,45.84,0,0,0,19.54,19.54c12.36,6.61,24.55,9.11,67.49,9.27H610.08c46.79,0,59.41-2.44,72.21-9.28a45.84,45.84,0,0,0,19.54-19.54c6.61-12.36,9.11-24.55,9.27-67.49V189.92c0-46.79-2.44-59.41-9.28-72.21a45.84,45.84,0,0,0-19.54-19.54C669.93,91.56,657.74,89.06,614.8,88.9ZM233.33,493.33A73.34,73.34,0,1,1,160,566.67,73.35,73.35,0,0,1,233.33,493.33Z&apos;/%3E%3C/g%3E%3C/svg%3E"></link></head><body><header><div class="image"></div><div class="title"><div class="banner"><div class="icon"></div></div><div data-title="汇编实验参考" class="main-title"></div></div></header><article><div id="4bDACJNjc3nP47hyfNJFa8" class="wolai-bookmark wolai-block"><a href="https://blog.csdn.net/deniece1/article/details/102697114">汇编实验2.2 查找匹配字符串（附有详细注释和源代码和相关知识）_deniece1的博客-CSDN博客_如何在源代码中寻找符合要求的字符</a><div class="info-box"><div class="text-pane"><div data-title="汇编实验2.2 查找匹配字符串（附有详细注释和源代码和相关知识）_deniece1的博客-CSDN博客_如何在源代码中寻找符合要求的字符"></div><div data-desc="实验2.2 查找匹配字符串实验要求：程序接收用户键入的一个关键字以及一个句子。如果句子中不包含关键字则显示’No match!’;如果句子中包含关键字则显示‘Match’，且把该字在句子中的位置用十六进制数显示出来。相关知识1.为什么不能说直接 MOV DS，1000H 而是要通过AX设置首地址？答：不可以，因为不允许将立即数直接传送到段寄存器，这是mov命令本身的限制。2.汇编语言中..."></div><div class="icon-host"><div class="icon icon-image" style="background-image: url(&quot;https://g.csdnimg.cn/static/logo/favicon32.ico&quot;)"></div><div data-hostname="blog.csdn.net"></div></div></div><div class="preview-pane"></div></div></div><div id="3n6QSLmp3D7N8AjbM3UVcd" class="wolai-bookmark wolai-block"><a href="https://blog.csdn.net/qq_36605433/article/details/83934594">汇编实验----查找匹配字符串_kaims的博客-CSDN博客_查找匹配字符串汇编语言</a><div class="info-box"><div class="text-pane"><div data-title="汇编实验----查找匹配字符串_kaims的博客-CSDN博客_查找匹配字符串汇编语言"></div><div data-desc="首先，在数据段里存放需要显示的字符，比如输出语句提示，另外也在数据区开辟存放输入关键字和句子的区域，并定义输入的最大长度，除此之外，为了防止出现输入被覆盖的现象，我也定义了一个换行回车的字符串temp。之后，开始运行时，首先利用串指令将提示字符输出，然后再调用中断21h的0ah输入字符，这里我限制关键字长度最大为5，句子长度最大为10，且代码中actk，acts分别表示实际输入的关键字的长度和.."></div><div class="icon-host"><div class="icon icon-image" style="background-image: url(&quot;https://g.csdnimg.cn/static/logo/favicon32.ico&quot;)"></div><div data-hostname="blog.csdn.net"></div></div></div><div class="preview-pane"></div></div></div><hr id="sb4Xy3ngB5UDko9PaKYwM3" class="wolai-block"/><div id="jLRW3qXCaLP3Pbtwt7CzJJ" class="wolai-bookmark wolai-block"><a href="https://blog.csdn.net/ly1714761414/article/details/66474882">汇编实验：分类统计字符个数_哩嘤的博客-CSDN博客_汇编分类统计字符个数</a><div class="info-box"><div class="text-pane"><div data-title="汇编实验：分类统计字符个数_哩嘤的博客-CSDN博客_汇编分类统计字符个数"></div><div data-desc="2.3  分类统计字符个数     1.题目:分类统计字符个数  2.实验要求：    程序接收用户键入的一行字符（字符个数不超过80个，该字符串用回车符结束），并按字母，数字及其他字符分类计数，然后将结果存入以letter，digit和other为名的存储单元中。 datarea   segment  letter1   db   ?  digit1    db   ?"></div><div class="icon-host"><div class="icon icon-image" style="background-image: url(&quot;https://g.csdnimg.cn/static/logo/favicon32.ico&quot;)"></div><div data-hostname="blog.csdn.net"></div></div></div><div class="preview-pane"></div></div></div><code-block id="priEjvVwSUyJdVfxraoJ5w" class="wolai-block"><div class="wolai-pre"><div data-lang="6502 Assembly" class="marker"></div><pre>datarea   segment
+  letter1   db   <span class="token operator">?</span>
+  digit1    db   <span class="token operator">?</span>
+  other1    db   <span class="token operator">?</span>
+  string   label  byte
+           max db <span class="token number">80</span> 
+           act db <span class="token operator">?</span>  
+           str db <span class="token number">80</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span>
+print   db  <span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'Please enter the string:'</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+mess1   db  <span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token string">'The total number of letter : '</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+mess2   db  <span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'The total number of digit  : '</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+mess3   db  <span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'The total number of other character : '</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+datarea   ends
+prognam  segment
+      assume  cs<span class="token operator">:</span>prognam<span class="token punctuation">,</span>ds<span class="token operator">:</span>datarea
+start<span class="token operator">:</span> push  ds
+       sub  ax<span class="token punctuation">,</span>ax
+       push  ax
+       mov   ax<span class="token punctuation">,</span>datarea
+       mov   ds<span class="token punctuation">,</span>ax
+       mov   es<span class="token punctuation">,</span>ax
+       mov   letter1<span class="token punctuation">,</span><span class="token number">0</span>
+       mov   digit1<span class="token punctuation">,</span><span class="token number">0</span>
+       mov   other1<span class="token punctuation">,</span><span class="token number">0</span>
+       lea   dx<span class="token punctuation">,</span>print
+       mov   ah<span class="token punctuation">,</span><span class="token number">09</span>h  
+       int   <span class="token number">21</span>h
+       lea   dx<span class="token punctuation">,</span>string
+       mov   ah<span class="token punctuation">,</span><span class="token number">0</span>ah
+       int   <span class="token number">21</span>h
+       sub   ch<span class="token punctuation">,</span>ch
+       mov   cl<span class="token punctuation">,</span><span class="token punctuation">[</span>string<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span>
+       lea   si<span class="token punctuation">,</span>string<span class="token operator">+</span><span class="token number">2</span>
+digitseg<span class="token operator">:</span> 
+       mov   al<span class="token punctuation">,</span><span class="token punctuation">[</span>si<span class="token punctuation">]</span>
+       cmp   al<span class="token punctuation">,</span><span class="token string">'0'</span>
+       jb    otherseg     <span class="token punctuation">;</span>小于<span class="token number">0</span>为其他<span class="token punctuation">,</span><span class="token number">0</span>到<span class="token number">9</span>为数字
+       cmp   al<span class="token punctuation">,</span><span class="token string">'9'</span>
+       ja    letter1seg    
+       inc   digit1
+       jmp   loop1
+letter1seg<span class="token operator">:</span> 
+       cmp   al<span class="token punctuation">,</span><span class="token string">'A'</span>       <span class="token punctuation">;</span>接上面，判断<span class="token number">9</span>之后，大于<span class="token number">9</span>，小于<span class="token constant">A</span>为其他，<span class="token constant">A</span>到<span class="token constant">Z</span>为字母
+       jb    otherseg   <span class="token punctuation">;</span>jb  cf<span class="token operator">=</span><span class="token number">1</span> （无符号数溢出）则转移，ja  cf与zf<span class="token operator">=</span><span class="token number">1</span>则转移
+       cmp   al<span class="token punctuation">,</span><span class="token string">'Z'</span>
+       ja    letter2seg 
+       inc   letter1
+       jmp   loop1  
+letter2seg<span class="token operator">:</span>  
+       cmp   al<span class="token punctuation">,</span><span class="token string">'a'</span>      <span class="token punctuation">;</span>接上面，判断<span class="token constant">Z</span>之后，大于<span class="token constant">Z</span>，小于a为其他，a到z为字母
+       jb    otherseg
+       cmp   al<span class="token punctuation">,</span><span class="token string">'z'</span>
+       ja    otherseg
+       inc   letter1
+       jmp   loop1
+otherseg<span class="token operator">:</span> 
+       inc   other1
+loop1<span class="token operator">:</span>  
+       inc   si
+       dec   cl
+       cmp   cl<span class="token punctuation">,</span><span class="token number">0</span>
+       jz    print1 
+       jne   digitseg    <span class="token punctuation">;</span>重复分类过程  
+print1<span class="token operator">:</span>   
+       lea   dx<span class="token punctuation">,</span>mess1
+       mov   ah<span class="token punctuation">,</span><span class="token number">09</span>h
+       int   <span class="token number">21</span>h
+       mov   al<span class="token punctuation">,</span>letter1
+       call  disp
+       lea   dx<span class="token punctuation">,</span> mess2
+       mov   ah<span class="token punctuation">,</span><span class="token number">09</span>h
+       int   <span class="token number">21</span>h
+       mov   al<span class="token punctuation">,</span>digit1
+       call  disp
+       lea   dx<span class="token punctuation">,</span> mess3
+       mov   ah<span class="token punctuation">,</span><span class="token number">09</span>h
+       int   <span class="token number">21</span>h
+       mov   al<span class="token punctuation">,</span>other1
+       call  disp
+exit<span class="token operator">:</span>
+       mov   ah<span class="token punctuation">,</span> <span class="token number">4</span>ch
+       int  <span class="token number">21</span>h
+disp<span class="token operator">:</span>                 <span class="token punctuation">;</span>十进制数形式显示<span class="token constant">AL</span>中的内容<span class="token punctuation">.</span>
+       <span class="token property-access">mov</span>  ah<span class="token punctuation">,</span> <span class="token number">0</span>
+       mov  bl<span class="token punctuation">,</span> <span class="token number">10</span>
+       div  bl        <span class="token punctuation">;</span>div 无符号<span class="token operator">:</span>div src <span class="token number">16</span>位操作<span class="token operator">:</span>商ax<span class="token operator">=</span><span class="token punctuation">(</span>dx<span class="token punctuation">,</span>ax<span class="token punctuation">)</span><span class="token operator">/</span>src<span class="token punctuation">,</span>余数dx
+       add  al<span class="token punctuation">,</span> <span class="token number">30</span>h    <span class="token punctuation">;</span>比如说al<span class="token operator">=</span><span class="token number">15</span>h<span class="token punctuation">,</span>即<span class="token number">21</span>，表示letter数量，然后，这个过程就是，ax<span class="token operator">=</span><span class="token number">0015</span><span class="token function">h</span><span class="token punctuation">(</span><span class="token number">21</span><span class="token punctuation">)</span><span class="token punctuation">,</span>除以bl，bl值为<span class="token number">10</span>
+       mov  dl<span class="token punctuation">,</span> al      <span class="token punctuation">;</span>则除完了的结果为<span class="token number">2</span>余<span class="token number">1</span>，则ah<span class="token operator">=</span><span class="token number">01</span><span class="token punctuation">,</span>al<span class="token operator">=</span><span class="token number">02</span><span class="token punctuation">,</span>即ax<span class="token operator">=</span><span class="token number">0102</span>h<span class="token punctuation">;</span><span class="token punctuation">,</span>那么al<span class="token operator">+</span><span class="token number">30</span>h即为表示该数字的<span class="token constant">ASCII</span>码值，因为<span class="token number">0</span>的<span class="token constant">ASCII</span>值为<span class="token number">30</span>h
+       mov  bh<span class="token punctuation">,</span> ah       <span class="token punctuation">;</span>则ax<span class="token operator">=</span><span class="token number">0132</span>h<span class="token punctuation">,</span>dl<span class="token operator">=</span><span class="token number">32</span><span class="token punctuation">,</span>bh<span class="token operator">=</span><span class="token number">01</span><span class="token punctuation">;</span>
+       mov  ah<span class="token punctuation">,</span> <span class="token number">02</span>h      <span class="token punctuation">;</span>显示输出dx<span class="token punctuation">,</span>则显示<span class="token number">32</span>码对应的数字，<span class="token number">2</span>
+       int  <span class="token number">21</span>h           
+       mov  al<span class="token punctuation">,</span> bh        <span class="token punctuation">;</span>把<span class="token number">01</span>给al<span class="token punctuation">,</span>然后算出<span class="token constant">ASCII</span>码，然后给dx，然后显示
+       add  al<span class="token punctuation">,</span> <span class="token number">30</span>h
+       mov  dl<span class="token punctuation">,</span> al        <span class="token punctuation">;</span>除数<span class="token constant">B</span>有 <span class="token number">8</span>位和<span class="token number">16</span>位两种，保存在一个reg寄存器里 或是内存单元中。
+ 
+                          <span class="token punctuation">;</span>被除数<span class="token constant">A</span> 默认存放在<span class="token constant">AX</span>中（<span class="token number">16</span>位以内） 或 <span class="token constant">AX</span>和<span class="token constant">DX</span>中（<span class="token number">32</span>位，<span class="token constant">DX</span>存放高<span class="token number">16</span>位，<span class="token constant">AX</span>存放低<span class="token number">16</span>位）
+ 
+                          <span class="token punctuation">;</span>结果： 如果除数<span class="token constant">B</span>是<span class="token number">8</span>位，那么除法的结果<span class="token constant">AL</span>保存商，<span class="token constant">AH</span>保存余数，
+                          <span class="token punctuation">;</span>如果除数<span class="token constant">B</span>是<span class="token number">16</span>位，那么除法的结果 <span class="token constant">AX</span>保存商，<span class="token constant">DX</span>保存余数。
+       mov  ah<span class="token punctuation">,</span> <span class="token number">02</span>h
+       int  <span class="token number">21</span>h     
+       ret
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+<span class="token punctuation">;</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span>       
+prognam   ends
+end   start
+</pre></div></code-block><code-block id="ntJxuL7cRbhPKHnpxE7Nz4" class="wolai-block"><div class="wolai-pre"><div data-lang="6502 Assembly" class="marker"></div><pre> 
+<span class="token punctuation">;</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">*</span>
+datasg  segment para    <span class="token string">'data'</span> 
+<span class="token punctuation">;</span>定义输入提示符 
+  string1   db  <span class="token string">'Enter keyword:$'</span>
+  string2   db  <span class="token string">'Enter sentence:$'</span>
+<span class="token punctuation">;</span>格式控制 换行
+  temp db  <span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'$'</span><span class="token punctuation">;</span>回车 换行
+  num db <span class="token operator">?</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+<span class="token punctuation">;</span>定义输出
+  mess1   db  <span class="token string">'Match at location:'</span><span class="token punctuation">,</span><span class="token operator">?</span><span class="token punctuation">,</span><span class="token operator">?</span><span class="token punctuation">,</span><span class="token string">' H of the sentence'</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+  mess2   db    <span class="token string">'No match.'</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'$'</span>  
+<span class="token punctuation">;</span>定义相关变量
+  keyword     label   byte
+      maxk     db      <span class="token number">5</span>
+      actk     db      <span class="token operator">?</span>           
+      keyd   db      <span class="token number">5</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span>    
+  sentence     label   byte
+      maxs     db      <span class="token number">10</span>
+      acts     db      <span class="token operator">?</span>           
+      sente   db      <span class="token number">10</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span>   
+datasg  ends
+<span class="token punctuation">;</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">*</span>
+codesg  segment para    <span class="token string">'code'</span>
+        assume  cs<span class="token operator">:</span>codesg<span class="token punctuation">,</span>ds<span class="token operator">:</span>datasg<span class="token punctuation">,</span>es<span class="token operator">:</span>datasg
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+main    proc    far
+        push    ds
+        sub     ax<span class="token punctuation">,</span>ax
+        push    ax
+        
+        mov     ax<span class="token punctuation">,</span>datasg
+        mov     ds<span class="token punctuation">,</span>ax
+        mov     es<span class="token punctuation">,</span>ax
+<span class="token punctuation">;</span>main part <span class="token keyword">of</span> program goes here
+start<span class="token operator">:</span>
+    mov ah<span class="token punctuation">,</span><span class="token number">9</span>H
+    mov dx<span class="token punctuation">,</span>offset string1
+    int <span class="token number">21</span>H
+    
+        lea     dx<span class="token punctuation">,</span>keyword 
+        mov     ah<span class="token punctuation">,</span><span class="token number">0</span>ah  
+        int     <span class="token number">21</span>h
+        cmp     actk<span class="token punctuation">,</span><span class="token number">0</span>
+        je      exit
+ 
+        lea     dx<span class="token punctuation">,</span>temp <span class="token punctuation">;</span>换行，防止覆盖
+        mov     ah<span class="token punctuation">,</span><span class="token number">09</span>
+        int     <span class="token number">21</span>h
+        
+     mov ah<span class="token punctuation">,</span><span class="token number">9</span>H
+    mov dx<span class="token punctuation">,</span>offset string2<span class="token punctuation">;</span>提示输入句子
+    int <span class="token number">21</span>H
+        
+        lea     dx<span class="token punctuation">,</span>sentence
+        mov     ah<span class="token punctuation">,</span><span class="token number">0</span>ah  
+        int     <span class="token number">21</span>h
+        cmp     acts<span class="token punctuation">,</span><span class="token number">0</span>
+        je      exit
+ 
+        lea     dx<span class="token punctuation">,</span>temp <span class="token punctuation">;</span>换行，防止覆盖
+        mov     ah<span class="token punctuation">,</span><span class="token number">09</span>
+        int     <span class="token number">21</span>h
+ 
+ 
+ 
+ 
+ 
+        lea     si<span class="token punctuation">,</span>keyd
+        lea     bx<span class="token punctuation">,</span>sente
+        mov     di<span class="token punctuation">,</span>bx
+        cld
+        mov     ch<span class="token punctuation">,</span><span class="token number">0</span>
+        mov     cl<span class="token punctuation">,</span>acts  <span class="token punctuation">;</span>句子长度，一个字节
+        sub     cl<span class="token punctuation">,</span>actk
+        inc     cx <span class="token punctuation">;</span>比较次数
+ 
+comp<span class="token operator">:</span>
+        push    cx
+        push    di
+        mov     cl<span class="token punctuation">,</span>actk <span class="token punctuation">;</span>关键字长度，一个字节
+        repz    cmpsb  <span class="token punctuation">;</span>如果相等继续比较<span class="token punctuation">;</span><span class="token number">64</span>
+        jz      find
+        pop     di
+        pop     cx
+        inc     di
+        lea     si<span class="token punctuation">,</span>keyd
+        loop    comp  <span class="token punctuation">;</span>
+ 
+        lea     dx<span class="token punctuation">,</span>mess2 <span class="token punctuation">;</span>不匹配
+        mov     ah<span class="token punctuation">,</span><span class="token number">09</span>
+        int     <span class="token number">21</span>h
+        jmp     exit
+ 
+ 
+find<span class="token operator">:</span>   
+        pop     di
+        pop     cx
+        sub     di<span class="token punctuation">,</span>bx
+        mov     bx<span class="token punctuation">,</span>di
+        inc     bx <span class="token punctuation">;</span>得到十进制的位置
+ 
+        mov     ax<span class="token punctuation">,</span>bx
+        mov     bh<span class="token punctuation">,</span><span class="token number">16</span>
+        div     bh
+        add     al<span class="token punctuation">,</span><span class="token number">48</span>
+        add     ah<span class="token punctuation">,</span><span class="token number">48</span>
+        mov     <span class="token punctuation">[</span>mess1<span class="token operator">+</span><span class="token number">18</span><span class="token punctuation">]</span><span class="token punctuation">,</span>al
+        mov     <span class="token punctuation">[</span>mess1<span class="token operator">+</span><span class="token number">19</span><span class="token punctuation">]</span><span class="token punctuation">,</span>ah
+ 
+ 
+        lea     dx<span class="token punctuation">,</span>mess1 <span class="token punctuation">;</span>输出
+        mov     ah<span class="token punctuation">,</span><span class="token number">09</span>
+        int     <span class="token number">21</span>h
+        jmp     start
+ 
+ 
+exit<span class="token operator">:</span>
+    ret                 <span class="token punctuation">;</span><span class="token keyword control-flow">return</span> to <span class="token constant">DOS</span>
+main    endp
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+codesg  ends            <span class="token punctuation">;</span>end <span class="token keyword">of</span> segment
+<span class="token punctuation">;</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">*</span>
+        end     main    <span class="token punctuation">;</span>end assembly
+ 
+ 
+ 
+
+</pre></div></code-block><code-block id="jJ9oZymRAYjorXdYZZMbg1" class="wolai-block"><div class="wolai-pre"><div data-lang="6502 Assembly" class="marker"></div><pre><span class="token comment">/*
+* s：待匹配的主串
+* t：模式串
+* n：主串的长度
+* m：模式串的长度
+*/</span>
+std<span class="token operator">:</span><span class="token operator">:</span>vector<span class="token operator">&lt;</span>int<span class="token operator">></span> <span class="token function">match</span><span class="token punctuation">(</span><span class="token parameter">char <span class="token operator">*</span>s<span class="token punctuation">,</span> char <span class="token operator">*</span>t<span class="token punctuation">,</span> int n<span class="token punctuation">,</span> int m</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  std<span class="token operator">:</span><span class="token operator">:</span>vector<span class="token operator">&lt;</span>int<span class="token operator">></span> ans<span class="token punctuation">;</span>
+  int i<span class="token punctuation">,</span> j<span class="token punctuation">;</span>
+  <span class="token keyword control-flow">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n <span class="token operator">-</span> m <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword control-flow">for</span> <span class="token punctuation">(</span>j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> m<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword control-flow">if</span> <span class="token punctuation">(</span>s<span class="token punctuation">[</span>i <span class="token operator">+</span> j<span class="token punctuation">]</span> <span class="token operator">!=</span> t<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword control-flow">break</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword control-flow">if</span> <span class="token punctuation">(</span>j <span class="token operator">==</span> m<span class="token punctuation">)</span> ans<span class="token punctuation">.</span><span class="token method function property-access">push_back</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword control-flow">return</span> ans<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre></div></code-block><code-block id="fRpAUJWnNzeCpW97RmQVgV" class="wolai-block"><div class="wolai-pre"><div data-lang="6502 Assembly" class="marker"></div><pre>  push cx
+   mov cx<span class="token punctuation">,</span>
+   s0<span class="token operator">:</span>
+     
+   loop s  
+    
+    mov ah<span class="token punctuation">,</span><span class="token number">4</span>ch</pre></div></code-block><code-block id="ukYZyUxr1pefKj42Whow8P" class="wolai-block"><div class="wolai-pre"><div data-lang="6502 Assembly" class="marker"></div><pre>         mov ah<span class="token punctuation">,</span><span class="token number">2</span>h
+     mov dx<span class="token punctuation">,</span>cx
+     add dx<span class="token punctuation">,</span><span class="token number">48</span>
+     int <span class="token number">21</span>h
+     
+       mov ah<span class="token punctuation">,</span><span class="token number">2</span>h
+       mov dx<span class="token punctuation">,</span>ds<span class="token operator">:</span><span class="token punctuation">[</span>bx<span class="token punctuation">]</span>
+       int <span class="token number">21</span>h
+       
+       mov ah<span class="token punctuation">,</span><span class="token number">9</span>h
+       mov dx<span class="token punctuation">,</span>offset nextline
+       int <span class="token number">21</span>h
+       
+       mov ah<span class="token punctuation">,</span><span class="token number">2</span>h
+       mov dx<span class="token punctuation">,</span>ds<span class="token operator">:</span><span class="token punctuation">[</span>si<span class="token punctuation">]</span>
+       int <span class="token number">21</span>h
+       
+       mov ah<span class="token punctuation">,</span><span class="token number">9</span>h
+       mov dx<span class="token punctuation">,</span>offset nextline
+       int <span class="token number">21</span>h
+       
+       mov ah<span class="token punctuation">,</span><span class="token number">2</span>h
+       mov dx<span class="token punctuation">,</span>ds<span class="token operator">:</span><span class="token punctuation">[</span>bx<span class="token punctuation">]</span>
+       sub dx<span class="token punctuation">,</span>ds<span class="token operator">:</span><span class="token punctuation">[</span>si<span class="token punctuation">]</span>
+       add dx<span class="token punctuation">,</span><span class="token number">48</span>
+       int <span class="token number">21</span>h
+       
+       mov ah<span class="token punctuation">,</span><span class="token number">9</span>h
+       mov dx<span class="token punctuation">,</span>offset nextline
+       int <span class="token number">21</span>h</pre></div></code-block><code-block id="eT7D61LBjE5z8NGbQWqSSq" class="wolai-block"><div class="wolai-pre"><div data-lang="6502 Assembly" class="marker"></div><pre>datas segment
+  keyword db <span class="token number">16</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">16</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token string">'$'</span><span class="token punctuation">)</span>
+    sentence db <span class="token number">32</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">32</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token string">'$'</span><span class="token punctuation">)</span>
+    string1 db <span class="token string">"please enter the keyword:$"</span>
+    string2 db <span class="token string">"please enter your sentence:$"</span> 
+    string3 db <span class="token string">'No match.'</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+    string4 db <span class="token string">'Match'</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+    nextline db <span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+    <span class="token maybe-class-name">KeyLen</span>  dw <span class="token number">0</span>
+    <span class="token maybe-class-name">SenLen</span> dw <span class="token number">0</span>
+datas ends
+
+stacks segment
+    dw <span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">;</span>储存多重循环<span class="token constant">CX</span>变量的栈段
+stacks ends
+
+codes segment
+    assume cs<span class="token operator">:</span>codes<span class="token punctuation">,</span>ds<span class="token operator">:</span>datas<span class="token punctuation">,</span>ss<span class="token operator">:</span>stacks
+start<span class="token operator">:</span>
+  <span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>初始化<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+  <span class="token punctuation">;</span>初始化栈
+  mov ax<span class="token punctuation">,</span>stacks
+    mov ss<span class="token punctuation">,</span>ax
+    mov sp<span class="token punctuation">,</span><span class="token number">16</span>
+    <span class="token punctuation">;</span>初始化代码段
+    mov ax<span class="token punctuation">,</span>datas
+    mov ds<span class="token punctuation">,</span>ax
+    <span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>输入<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+    <span class="token punctuation">;</span>输入子串
+       <span class="token punctuation">;</span>输出 提示符
+      mov ah<span class="token punctuation">,</span><span class="token number">9</span>H
+      mov dx<span class="token punctuation">,</span>offset string1
+      int <span class="token number">21</span>H
+      <span class="token punctuation">;</span>输入 keyword
+      mov ah<span class="token punctuation">,</span><span class="token number">0</span><span class="token maybe-class-name">AH</span>
+      mov dx<span class="token punctuation">,</span>offset keyword
+      int <span class="token number">21</span>H
+      <span class="token punctuation">;</span>输出 换行
+      mov ah<span class="token punctuation">,</span><span class="token number">9</span>H
+      mov dx<span class="token punctuation">,</span>offset nextline
+      int <span class="token number">21</span>H
+    <span class="token punctuation">;</span>输入主串
+        <span class="token punctuation">;</span>输出 提示符
+      mov ah<span class="token punctuation">,</span><span class="token number">9</span>H
+      mov dx<span class="token punctuation">,</span>offset string2
+      int <span class="token number">21</span>H
+      <span class="token punctuation">;</span>输入 sentence
+      mov ah<span class="token punctuation">,</span><span class="token number">0</span><span class="token maybe-class-name">AH</span>
+      mov dx<span class="token punctuation">,</span>offset sentence
+      int <span class="token number">21</span>H
+      <span class="token punctuation">;</span>输出 换行
+      mov ah<span class="token punctuation">,</span><span class="token number">9</span>H
+      mov dx<span class="token punctuation">,</span>offset nextline
+      int <span class="token number">21</span>H
+  <span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>赋值<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+  <span class="token punctuation">;</span>给SenLen赋值
+  mov bx<span class="token punctuation">,</span>offset sentence <span class="token operator">+</span> <span class="token number">1</span>
+  mov ax<span class="token punctuation">,</span><span class="token punctuation">[</span>bx<span class="token punctuation">]</span>
+  mov <span class="token maybe-class-name">SenLen</span><span class="token punctuation">,</span>ax
+  <span class="token punctuation">;</span>给KeyLen赋值
+  mov bx<span class="token punctuation">,</span>offset keyword <span class="token operator">+</span> <span class="token number">1</span>
+  mov ax<span class="token punctuation">,</span><span class="token punctuation">[</span>bx<span class="token punctuation">]</span>
+  mov <span class="token maybe-class-name">KeyLen</span><span class="token punctuation">,</span>ax
+  <span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+  <span class="token punctuation">;</span>外循环循环SenLen <span class="token operator">-</span> <span class="token maybe-class-name">KeyLen</span> <span class="token operator">+</span> <span class="token number">1</span>次
+  mov cx<span class="token punctuation">,</span><span class="token maybe-class-name">Senlen</span>
+  sub cx<span class="token punctuation">,</span><span class="token maybe-class-name">Keylen</span>
+  inc cx
+  
+  mov bx<span class="token punctuation">,</span>offset sentence <span class="token operator">+</span> <span class="token number">2</span>
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+ s<span class="token operator">:</span>
+   push cx
+   push bx
+   
+   mov cx<span class="token punctuation">,</span><span class="token maybe-class-name">KeyLen</span>
+   mov si<span class="token punctuation">,</span>offset keyword <span class="token operator">+</span> <span class="token number">2</span>
+   <span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+   s0<span class="token operator">:</span>  
+     <span class="token punctuation">;</span><span class="token keyword control-flow">if</span><span class="token punctuation">(</span>sen<span class="token punctuation">[</span>bx<span class="token punctuation">]</span><span class="token operator">!=</span>key<span class="token punctuation">[</span>si<span class="token punctuation">]</span><span class="token punctuation">)</span>
+    mov ax<span class="token punctuation">,</span>ds<span class="token operator">:</span><span class="token punctuation">[</span>bx<span class="token punctuation">]</span>
+     cmp ax<span class="token punctuation">,</span>ds<span class="token operator">:</span><span class="token punctuation">[</span>si<span class="token punctuation">]</span>
+       <span class="token punctuation">;</span><span class="token keyword control-flow">break</span><span class="token punctuation">;</span>       
+       jnz <span class="token keyword control-flow">break</span>
+     <span class="token punctuation">;</span><span class="token keyword control-flow">else</span>
+       inc bx
+      inc si
+     loop s0
+  <span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+  jmp find
+
+     
+<span class="token keyword control-flow">break</span><span class="token operator">:</span>
+
+  pop bx
+   inc bx 
+   pop cx
+loop s  
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+  <span class="token punctuation">;</span>如果循环结束都没有找到的话，那就是没有找到
+   jmp <span class="token maybe-class-name">Nfind</span>
+   
+   
+find<span class="token operator">:</span>
+  mov ah<span class="token punctuation">,</span><span class="token number">9</span>H
+  mov dx<span class="token punctuation">,</span>offset string4
+  int <span class="token number">21</span>H
+  
+<span class="token maybe-class-name">Nfind</span><span class="token operator">:</span>
+  mov ah<span class="token punctuation">,</span><span class="token number">9</span>H
+  mov dx<span class="token punctuation">,</span>offset string3
+  int <span class="token number">21</span>H
+  
+    mov ah<span class="token punctuation">,</span><span class="token number">4</span>ch
+    int <span class="token number">21</span>h
+codes ends
+    end start
+
+
+
+
+</pre></div></code-block><code-block id="dbyoVv4pkYhLWzQbb6jWbY" class="wolai-block"><div class="wolai-pre"><div data-lang="6502 Assembly" class="marker"></div><pre>datas segment
+  keyword db <span class="token number">16</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">16</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token string">'$'</span><span class="token punctuation">)</span>
+    sentence db <span class="token number">32</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">32</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token string">'$'</span><span class="token punctuation">)</span>
+    string1 db <span class="token string">"please enter the keyword:$"</span>
+    string2 db <span class="token string">"please enter your sentence:$"</span> 
+    string3 db <span class="token string">'No match.'</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+    string4 db <span class="token string">'Match'</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+    nextline db <span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+    <span class="token maybe-class-name">KeyLen</span>  dw <span class="token number">0</span>
+    <span class="token maybe-class-name">SenLen</span> dw <span class="token number">0</span>
+datas ends
+
+stacks segment
+    dw <span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">;</span>储存多重循环<span class="token constant">CX</span>变量的栈段
+stacks ends
+
+codes segment
+    assume cs<span class="token operator">:</span>codes<span class="token punctuation">,</span>ds<span class="token operator">:</span>datas<span class="token punctuation">,</span>ss<span class="token operator">:</span>stacks
+start<span class="token operator">:</span>
+  <span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>初始化<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+  <span class="token punctuation">;</span>初始化栈
+  mov ax<span class="token punctuation">,</span>stacks
+    mov ss<span class="token punctuation">,</span>ax
+    mov sp<span class="token punctuation">,</span><span class="token number">16</span>
+    <span class="token punctuation">;</span>初始化代码段
+    mov ax<span class="token punctuation">,</span>datas
+    mov ds<span class="token punctuation">,</span>ax
+    <span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>输入<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+    <span class="token punctuation">;</span>输入子串
+       <span class="token punctuation">;</span>输出 提示符
+      mov ah<span class="token punctuation">,</span><span class="token number">9</span>H
+      mov dx<span class="token punctuation">,</span>offset string1
+      int <span class="token number">21</span>H
+      <span class="token punctuation">;</span>输入 keyword
+      mov ah<span class="token punctuation">,</span><span class="token number">0</span><span class="token maybe-class-name">AH</span>
+      mov dx<span class="token punctuation">,</span>offset keyword
+      int <span class="token number">21</span>H
+      <span class="token punctuation">;</span>输出 换行
+      mov ah<span class="token punctuation">,</span><span class="token number">9</span>H
+      mov dx<span class="token punctuation">,</span>offset nextline
+      int <span class="token number">21</span>H
+    <span class="token punctuation">;</span>输入主串
+        <span class="token punctuation">;</span>输出 提示符
+      mov ah<span class="token punctuation">,</span><span class="token number">9</span>H
+      mov dx<span class="token punctuation">,</span>offset string2
+      int <span class="token number">21</span>H
+      <span class="token punctuation">;</span>输入 sentence
+      mov ah<span class="token punctuation">,</span><span class="token number">0</span><span class="token maybe-class-name">AH</span>
+      mov dx<span class="token punctuation">,</span>offset sentence
+      int <span class="token number">21</span>H
+      <span class="token punctuation">;</span>输出 换行
+      mov ah<span class="token punctuation">,</span><span class="token number">9</span>H
+      mov dx<span class="token punctuation">,</span>offset nextline
+      int <span class="token number">21</span>H
+  <span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>赋值<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+  <span class="token punctuation">;</span>给SenLen赋值
+  mov bx<span class="token punctuation">,</span>offset sentence <span class="token operator">+</span> <span class="token number">1</span>
+  mov ax<span class="token punctuation">,</span><span class="token punctuation">[</span>bx<span class="token punctuation">]</span>
+  mov <span class="token maybe-class-name">SenLen</span><span class="token punctuation">,</span>ax
+  <span class="token punctuation">;</span>给KeyLen赋值
+  mov bx<span class="token punctuation">,</span>offset keyword <span class="token operator">+</span> <span class="token number">1</span>
+  mov ax<span class="token punctuation">,</span><span class="token punctuation">[</span>bx<span class="token punctuation">]</span>
+  mov <span class="token maybe-class-name">KeyLen</span><span class="token punctuation">,</span>ax
+  <span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+  <span class="token punctuation">;</span>外循环循环SenLen <span class="token operator">-</span> <span class="token maybe-class-name">KeyLen</span> <span class="token operator">+</span> <span class="token number">1</span>次
+  mov cx<span class="token punctuation">,</span><span class="token maybe-class-name">Senlen</span>
+  sub cx<span class="token punctuation">,</span><span class="token maybe-class-name">Keylen</span>
+    <span class="token punctuation">;</span>如果SenLen<span class="token operator">&lt;</span><span class="token maybe-class-name">KeyLen</span>
+    js <span class="token maybe-class-name">Nfind</span>  
+  inc cx
+
+  
+  mov bx<span class="token punctuation">,</span>offset sentence <span class="token operator">+</span> <span class="token number">2</span>
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+ s<span class="token operator">:</span>
+   push cx
+   push bx
+   
+   mov cx<span class="token punctuation">,</span><span class="token maybe-class-name">KeyLen</span>
+   mov si<span class="token punctuation">,</span>offset keyword <span class="token operator">+</span> <span class="token number">2</span>
+   <span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+   s0<span class="token operator">:</span>
+     mov ah<span class="token punctuation">,</span><span class="token number">2</span>h
+     mov dx<span class="token punctuation">,</span>cx
+     add dx<span class="token punctuation">,</span><span class="token number">48</span>
+     int <span class="token number">21</span>h
+     
+     
+     
+     <span class="token punctuation">;</span><span class="token keyword control-flow">if</span><span class="token punctuation">(</span>sen<span class="token punctuation">[</span>bx<span class="token punctuation">]</span><span class="token operator">!=</span>key<span class="token punctuation">[</span>si<span class="token punctuation">]</span><span class="token punctuation">)</span>
+     
+     
+       mov ah<span class="token punctuation">,</span><span class="token number">2</span>h
+       mov dx<span class="token punctuation">,</span>ds<span class="token operator">:</span><span class="token punctuation">[</span>bx<span class="token punctuation">]</span>
+       int <span class="token number">21</span>h
+       
+       mov ah<span class="token punctuation">,</span><span class="token number">9</span>h
+       mov dx<span class="token punctuation">,</span>offset nextline
+       int <span class="token number">21</span>h
+       
+       mov ah<span class="token punctuation">,</span><span class="token number">2</span>h
+       mov dx<span class="token punctuation">,</span>ds<span class="token operator">:</span><span class="token punctuation">[</span>si<span class="token punctuation">]</span>
+       int <span class="token number">21</span>h
+       
+       mov ah<span class="token punctuation">,</span><span class="token number">9</span>h
+       mov dx<span class="token punctuation">,</span>offset nextline
+       int <span class="token number">21</span>h
+       
+       mov ah<span class="token punctuation">,</span><span class="token number">2</span>h
+       mov dx<span class="token punctuation">,</span>ds<span class="token operator">:</span><span class="token punctuation">[</span>bx<span class="token punctuation">]</span>
+       sub dx<span class="token punctuation">,</span>ds<span class="token operator">:</span><span class="token punctuation">[</span>si<span class="token punctuation">]</span>
+       add dx<span class="token punctuation">,</span><span class="token number">48</span>
+       int <span class="token number">21</span>h
+       
+       mov ah<span class="token punctuation">,</span><span class="token number">9</span>h
+       mov dx<span class="token punctuation">,</span>offset nextline
+       int <span class="token number">21</span>h
+    mov ax<span class="token punctuation">,</span>ds<span class="token operator">:</span><span class="token punctuation">[</span>bx<span class="token punctuation">]</span>
+     cmp ax<span class="token punctuation">,</span>ds<span class="token operator">:</span><span class="token punctuation">[</span>si<span class="token punctuation">]</span>
+
+       <span class="token punctuation">;</span><span class="token keyword control-flow">break</span><span class="token punctuation">;</span>       
+       jne <span class="token keyword control-flow">break</span>
+       mov ah<span class="token punctuation">,</span><span class="token number">2</span>h
+      mov dx<span class="token punctuation">,</span><span class="token string">'q'</span>
+      int <span class="token number">21</span>h
+     <span class="token punctuation">;</span><span class="token keyword control-flow">else</span>
+       inc bx
+       inc si
+   loop s0
+  <span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+  jmp find
+
+     
+<span class="token keyword control-flow">break</span><span class="token operator">:</span>
+  pop bx
+   inc bx 
+   pop cx
+loop s  
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+  <span class="token punctuation">;</span>如果循环结束都没有找到的话，那就是没有找到
+   jmp <span class="token maybe-class-name">Nfind</span>
+   
+   
+find<span class="token operator">:</span>
+  mov ah<span class="token punctuation">,</span><span class="token number">9</span>H
+  mov dx<span class="token punctuation">,</span>offset string4
+  int <span class="token number">21</span>H
+  
+<span class="token maybe-class-name">Nfind</span><span class="token operator">:</span>
+  mov ah<span class="token punctuation">,</span><span class="token number">9</span>H
+  mov dx<span class="token punctuation">,</span>offset string3
+  int <span class="token number">21</span>H
+  
+    mov ah<span class="token punctuation">,</span><span class="token number">4</span>ch
+    int <span class="token number">21</span>h
+codes ends
+    end start
+
+
+
+
+</pre></div></code-block><code-block id="etF6YS1NessARmzoNXx1LN" class="wolai-block"><div class="wolai-pre"><div data-lang="C++" class="marker"></div><pre>datas   segment
+
+  string1   db  <span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'Please enter the string:'</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+  mess1   db  <span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token string">'The total number of letter : '</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+  mess2   db  <span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'The total number of digit  : '</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+  mess3   db  <span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'The total number of other character : '</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+
+  letterLen   db   <span class="token operator">?</span>
+  digitLen    db   <span class="token operator">?</span>
+  otherLen    db   <span class="token operator">?</span>
+  string   label  byte
+    maxLen db <span class="token number">80</span> 
+    <span class="token maybe-class-name">Len</span>  db <span class="token operator">?</span>  
+    str db <span class="token number">80</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token string">'$'</span><span class="token punctuation">)</span>
+
+datas   ends
+
+stacks segment
+    dw <span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span>  
+stacks ends
+
+codes  segment
+      assume  cs<span class="token operator">:</span>codes<span class="token punctuation">,</span>ds<span class="token operator">:</span>datas
+start<span class="token operator">:</span> 
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>初始化<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+        <span class="token punctuation">;</span>初始化栈
+      mov ax<span class="token punctuation">,</span>stacks
+        mov ss<span class="token punctuation">,</span>ax
+        mov sp<span class="token punctuation">,</span><span class="token number">16</span>
+
+        <span class="token punctuation">;</span>初始化代码段
+        mov     ax<span class="token punctuation">,</span>datas
+        mov     ds<span class="token punctuation">,</span>ax
+        
+        <span class="token punctuation">;</span>初始化拓展段
+        mov     es<span class="token punctuation">,</span>ax
+
+    <span class="token punctuation">;</span>初始化变量
+    mov   letterLen<span class="token punctuation">,</span><span class="token number">0</span>
+    mov   digitLen<span class="token punctuation">,</span><span class="token number">0</span>
+    mov   otherLen<span class="token punctuation">,</span><span class="token number">0</span>
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>初始化<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>输入<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+    <span class="token punctuation">;</span>输出 提示符
+    mov   dx<span class="token punctuation">,</span>offset string1
+    mov   ah<span class="token punctuation">,</span><span class="token number">09</span>h  
+    int   <span class="token number">21</span>h
+    <span class="token punctuation">;</span>输入字符串
+    lea   dx<span class="token punctuation">,</span>string
+    mov   ah<span class="token punctuation">,</span><span class="token number">0</span>ah
+    int   <span class="token number">21</span>h
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>输入<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+    sub   ch<span class="token punctuation">,</span>ch
+    mov   bx<span class="token punctuation">,</span>offset len
+    mov   cx<span class="token punctuation">,</span><span class="token punctuation">[</span>bx<span class="token punctuation">]</span>
+    mov   si<span class="token punctuation">,</span>offset str
+
+<span class="token maybe-class-name">IsDigit</span><span class="token operator">:</span> 
+       mov   al<span class="token punctuation">,</span><span class="token punctuation">[</span>si<span class="token punctuation">]</span>
+       cmp   al<span class="token punctuation">,</span><span class="token string">'0'</span>
+       jb    <span class="token maybe-class-name">IsOther</span>  
+       cmp   al<span class="token punctuation">,</span><span class="token string">'9'</span>
+       ja    <span class="token maybe-class-name">IsBig</span>    
+       inc   digitLen
+       jmp   loop1
+<span class="token maybe-class-name">IsBig</span><span class="token operator">:</span> 
+    <span class="token punctuation">;</span>不是数字也不是字母<span class="token operator">--</span>是其他
+    cmp   al<span class="token punctuation">,</span><span class="token string">'A'</span>       
+    jb    <span class="token maybe-class-name">IsOther</span>   
+    cmp   al<span class="token punctuation">,</span><span class="token string">'Z'</span>
+    ja    <span class="token maybe-class-name">IsSmall</span> 
+    inc   letterLen
+    jmp   loop1  
+<span class="token maybe-class-name">IsSmall</span><span class="token operator">:</span>  
+       cmp   al<span class="token punctuation">,</span><span class="token string">'a'</span>
+       jb    <span class="token maybe-class-name">IsOther</span>
+       cmp   al<span class="token punctuation">,</span><span class="token string">'z'</span>
+       ja    <span class="token maybe-class-name">IsOther</span>
+       inc   letterLen
+       jmp   loop1
+<span class="token maybe-class-name">IsOther</span><span class="token operator">:</span> 
+       inc   otherLen
+     
+loop1<span class="token operator">:</span>  
+       inc   si
+       dec   cl
+       cmp   cl<span class="token punctuation">,</span><span class="token number">0</span>
+       jz    string11 
+       jne   <span class="token maybe-class-name">IsDigit</span>    <span class="token punctuation">;</span>重复分类过程  
+string11<span class="token operator">:</span>   
+       lea   dx<span class="token punctuation">,</span>mess1
+       mov   ah<span class="token punctuation">,</span><span class="token number">09</span>h
+       int   <span class="token number">21</span>h
+       mov   al<span class="token punctuation">,</span>letterLen
+       call  disp
+       lea   dx<span class="token punctuation">,</span> mess2
+       mov   ah<span class="token punctuation">,</span><span class="token number">09</span>h
+       int   <span class="token number">21</span>h
+       mov   al<span class="token punctuation">,</span>digitLen
+       call  disp
+       lea   dx<span class="token punctuation">,</span> mess3
+       mov   ah<span class="token punctuation">,</span><span class="token number">09</span>h
+       int   <span class="token number">21</span>h
+       mov   al<span class="token punctuation">,</span>otherLen
+       call  disp
+exit<span class="token operator">:</span>
+       mov   ah<span class="token punctuation">,</span> <span class="token number">4</span>ch
+       int  <span class="token number">21</span>h
+disp<span class="token operator">:</span>                 <span class="token punctuation">;</span>十进制数形式显示<span class="token constant">AL</span>中的内容<span class="token punctuation">.</span>
+       <span class="token property-access">mov</span>  ah<span class="token punctuation">,</span> <span class="token number">0</span>
+       mov  bl<span class="token punctuation">,</span> <span class="token number">10</span>
+       div  bl        <span class="token punctuation">;</span>div 无符号<span class="token operator">:</span>div src <span class="token number">16</span>位操作<span class="token operator">:</span>商ax<span class="token operator">=</span><span class="token punctuation">(</span>dx<span class="token punctuation">,</span>ax<span class="token punctuation">)</span><span class="token operator">/</span>src<span class="token punctuation">,</span>余数dx
+       add  al<span class="token punctuation">,</span> <span class="token number">30</span>h    <span class="token punctuation">;</span>比如说al<span class="token operator">=</span><span class="token number">15</span>h<span class="token punctuation">,</span>即<span class="token number">21</span>，表示letter数量，然后，这个过程就是，ax<span class="token operator">=</span><span class="token number">0015</span><span class="token function">h</span><span class="token punctuation">(</span><span class="token number">21</span><span class="token punctuation">)</span><span class="token punctuation">,</span>除以bl，bl值为<span class="token number">10</span>
+       mov  dl<span class="token punctuation">,</span> al      <span class="token punctuation">;</span>则除完了的结果为<span class="token number">2</span>余<span class="token number">1</span>，则ah<span class="token operator">=</span><span class="token number">01</span><span class="token punctuation">,</span>al<span class="token operator">=</span><span class="token number">02</span><span class="token punctuation">,</span>即ax<span class="token operator">=</span><span class="token number">0102</span>h<span class="token punctuation">;</span><span class="token punctuation">,</span>那么al<span class="token operator">+</span><span class="token number">30</span>h即为表示该数字的<span class="token constant">ASCII</span>码值，因为<span class="token number">0</span>的<span class="token constant">ASCII</span>值为<span class="token number">30</span>h
+       mov  bh<span class="token punctuation">,</span> ah       <span class="token punctuation">;</span>则ax<span class="token operator">=</span><span class="token number">0132</span>h<span class="token punctuation">,</span>dl<span class="token operator">=</span><span class="token number">32</span><span class="token punctuation">,</span>bh<span class="token operator">=</span><span class="token number">01</span><span class="token punctuation">;</span>
+       mov  ah<span class="token punctuation">,</span> <span class="token number">02</span>h      <span class="token punctuation">;</span>显示输出dx<span class="token punctuation">,</span>则显示<span class="token number">32</span>码对应的数字，<span class="token number">2</span>
+       int  <span class="token number">21</span>h           
+       mov  al<span class="token punctuation">,</span> bh        <span class="token punctuation">;</span>把<span class="token number">01</span>给al<span class="token punctuation">,</span>然后算出<span class="token constant">ASCII</span>码，然后给dx，然后显示
+       add  al<span class="token punctuation">,</span> <span class="token number">30</span>h
+       mov  dl<span class="token punctuation">,</span> al        <span class="token punctuation">;</span>除数<span class="token constant">B</span>有 <span class="token number">8</span>位和<span class="token number">16</span>位两种，保存在一个reg寄存器里 或是内存单元中。
+ 
+                          <span class="token punctuation">;</span>被除数<span class="token constant">A</span> 默认存放在<span class="token constant">AX</span>中（<span class="token number">16</span>位以内） 或 <span class="token constant">AX</span>和<span class="token constant">DX</span>中（<span class="token number">32</span>位，<span class="token constant">DX</span>存放高<span class="token number">16</span>位，<span class="token constant">AX</span>存放低<span class="token number">16</span>位）
+ 
+                          <span class="token punctuation">;</span>结果： 如果除数<span class="token constant">B</span>是<span class="token number">8</span>位，那么除法的结果<span class="token constant">AL</span>保存商，<span class="token constant">AH</span>保存余数，
+                          <span class="token punctuation">;</span>如果除数<span class="token constant">B</span>是<span class="token number">16</span>位，那么除法的结果 <span class="token constant">AX</span>保存商，<span class="token constant">DX</span>保存余数。
+       mov  ah<span class="token punctuation">,</span> <span class="token number">02</span>h
+       int  <span class="token number">21</span>h     
+       ret
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+<span class="token punctuation">;</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span><span class="token operator">**</span>       
+codes   ends
+end   start
+</pre></div></code-block><code-block id="5LuyQNheEebTFKtey7Y2tn" class="wolai-block"><div class="wolai-pre"><div data-lang="C++" class="marker"></div><pre>
+datas segment
+  mess1 db <span class="token string">'Input name:'</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+  mess2 db <span class="token string">'Input a telephone number:'</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+  mess3 db <span class="token string">'Do you want a telephone number?(Y/N)'</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+  mess4 db <span class="token string">'name?'</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token string">'$'</span> 
+  mess5 db <span class="token string">'name'</span><span class="token punctuation">,</span><span class="token number">19</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'tel.'</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+  mess6 db <span class="token string">'Not find!'</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+  nextline db  <span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'$'</span><span class="token punctuation">;</span>回车 换行
+  
+  <span class="token punctuation">;</span>输入的姓名
+  namein label byte
+    maxNLen db <span class="token number">20</span>
+    <span class="token maybe-class-name">NLen</span> db <span class="token operator">?</span>
+    name db <span class="token number">20</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token string">'$'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">;</span>输入的电话号码
+  phonein label byte
+    maxPLen db <span class="token number">8</span>
+    <span class="token maybe-class-name">PLen</span> db <span class="token operator">?</span>
+    phone db <span class="token number">8</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token string">'$'</span><span class="token punctuation">)</span>
+  
+  num dw <span class="token number">0</span><span class="token punctuation">;</span>用来标识电话表中数据个数
+
+  temp_nam db <span class="token number">20</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span><span class="token punctuation">;</span>临时单元
+  temp_tab db <span class="token number">20</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">4</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">8</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+  
+  <span class="token punctuation">;</span>排序用，临时储存tel_tab中一项
+  tel_tab db <span class="token number">50</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token number">20</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">4</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">8</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'$'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">;</span>每一项<span class="token number">35</span>（<span class="token number">20</span><span class="token operator">+</span><span class="token number">8</span><span class="token operator">+</span><span class="token number">4</span><span class="token operator">+</span><span class="token number">3</span>）字节
+datas ends
+
+stacks segment
+    dw <span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span>  
+stacks ends
+
+codes segment
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>mian<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+main proc far
+    assume cs<span class="token operator">:</span>codes<span class="token punctuation">,</span>ds<span class="token operator">:</span>datas<span class="token punctuation">,</span>es<span class="token operator">:</span>datas     
+start<span class="token operator">:</span>
+  <span class="token punctuation">;</span>初始化栈
+  mov ax<span class="token punctuation">,</span>stacks
+  mov ss<span class="token punctuation">,</span>ax
+  mov sp<span class="token punctuation">,</span><span class="token number">16</span>
+
+  <span class="token punctuation">;</span>初始化代码段
+  mov ax<span class="token punctuation">,</span>datas
+  mov ds<span class="token punctuation">,</span>ax
+        
+  <span class="token punctuation">;</span>初始化拓展段
+  mov es<span class="token punctuation">,</span>ax
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>输入<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+input<span class="token operator">:</span>
+  <span class="token punctuation">;</span>输入名字
+    <span class="token punctuation">;</span>输出 提示符
+    lea dx<span class="token punctuation">,</span>mess1
+    mov ah<span class="token punctuation">,</span><span class="token number">09</span>h
+    int <span class="token number">21</span>h
+
+    <span class="token punctuation">;</span>清空各个临时变量
+    call clear
+
+    <span class="token punctuation">;</span>输入名字
+    call input_name
+
+    <span class="token punctuation">;</span>如果没有输入就退出
+    cmp <span class="token maybe-class-name">NLen</span><span class="token punctuation">,</span><span class="token number">0</span>
+    je query
+
+    <span class="token punctuation">;</span>储存名字
+    call store_name
+
+  <span class="token punctuation">;</span>输入电话号码
+    <span class="token punctuation">;</span>输出 提示符
+    lea dx<span class="token punctuation">,</span>mess2
+    mov ah<span class="token punctuation">,</span><span class="token number">09</span>h
+    int <span class="token number">21</span>h
+    <span class="token punctuation">;</span>输入 电话号码
+    call input_phone
+    call name_sort
+
+    jmp input
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>输入<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>查询<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+query<span class="token operator">:</span>
+
+  <span class="token punctuation">;</span>是否继续查询
+    <span class="token punctuation">;</span>输出 提示是否进行查询
+    mov ah<span class="token punctuation">,</span><span class="token number">09</span>
+    lea dx<span class="token punctuation">,</span>mess3
+    int <span class="token number">21</span>h
+
+    <span class="token punctuation">;</span>输入 <span class="token constant">Y</span><span class="token operator">/</span><span class="token constant">N</span>
+    mov ah<span class="token punctuation">,</span><span class="token number">01</span>h
+    int <span class="token number">21</span>h
+
+    <span class="token punctuation">;</span><span class="token keyword control-flow">if</span> <span class="token constant">N</span>
+    cmp al<span class="token punctuation">,</span><span class="token string">'N'</span>
+      je exit
+
+  <span class="token punctuation">;</span>换行
+    mov dx<span class="token punctuation">,</span>offset nextline 
+    mov  ah<span class="token punctuation">,</span><span class="token number">09</span>
+    int <span class="token number">21</span>h 
+
+  <span class="token punctuation">;</span>输入 名字
+    <span class="token punctuation">;</span>输出 提示符
+    mov ah<span class="token punctuation">,</span><span class="token number">09</span>
+    lea dx<span class="token punctuation">,</span>mess4
+    int <span class="token number">21</span>h
+    <span class="token punctuation">;</span>输入 名字
+      call input_name
+    <span class="token punctuation">;</span><span class="token keyword control-flow">if</span> 没有输入 <span class="token operator">-</span><span class="token operator">></span> 退出
+    cmp <span class="token maybe-class-name">NLen</span><span class="token punctuation">,</span><span class="token number">0</span>
+    je exit
+  <span class="token punctuation">;</span>查询
+    call name_query
+  <span class="token punctuation">;</span>输出
+    call printline
+
+    jmp query
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>查询<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+exit<span class="token operator">:</span>
+    mov ah<span class="token punctuation">,</span><span class="token number">4</span>ch
+    int <span class="token number">21</span>h
+main endp
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>mian<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+
+
+input_name proc near
+<span class="token punctuation">;</span>输入名字 <span class="token operator">-</span><span class="token operator">></span> namein
+    lea dx<span class="token punctuation">,</span>namein
+    mov ah<span class="token punctuation">,</span><span class="token number">10</span>
+    int <span class="token number">21</span>h
+
+    mov dx<span class="token punctuation">,</span>offset nextline 
+    mov  ah<span class="token punctuation">,</span><span class="token number">09</span>
+    int <span class="token number">21</span>h
+
+    ret
+input_name endp
+
+
+store_name proc near
+<span class="token punctuation">;</span>copy name to temp_tab
+  <span class="token punctuation">;</span><span class="token keyword control-flow">if</span> <span class="token maybe-class-name">Nlen</span><span class="token operator">==</span><span class="token number">0</span> <span class="token operator">-</span><span class="token operator">></span> exit
+    cmp <span class="token maybe-class-name">NLen</span><span class="token punctuation">,</span><span class="token number">0</span>
+    je exit1
+
+  <span class="token punctuation">;</span>原串
+    lea si<span class="token punctuation">,</span>name
+  <span class="token punctuation">;</span>目标串
+    lea di<span class="token punctuation">,</span>temp_tab
+  <span class="token punctuation">;</span>cx
+    sub ch<span class="token punctuation">,</span>ch
+    mov cl<span class="token punctuation">,</span><span class="token maybe-class-name">NLen</span>
+  <span class="token punctuation">;</span>清空
+    cld
+
+  <span class="token punctuation">;</span>自动复制字符串
+    rep movsb
+  
+exit1<span class="token operator">:</span>
+    ret
+store_name endp
+
+
+
+input_phone proc near
+<span class="token punctuation">;</span>输入phone 并且 和 name合并到临时串中
+  <span class="token punctuation">;</span>输入
+    lea dx<span class="token punctuation">,</span>phonein
+    mov ah<span class="token punctuation">,</span><span class="token number">10</span>
+    int <span class="token number">21</span>h
+
+    cmp <span class="token maybe-class-name">PLen</span><span class="token punctuation">,</span><span class="token number">0</span>
+    je exit2
+
+  <span class="token punctuation">;</span>换行
+    mov dx<span class="token punctuation">,</span>offset nextline 
+    mov  ah<span class="token punctuation">,</span><span class="token number">09</span>
+    int <span class="token number">21</span>h  
+
+  <span class="token punctuation">;</span>原串 
+    lea si<span class="token punctuation">,</span>phone
+  <span class="token punctuation">;</span>目标串
+    lea di<span class="token punctuation">,</span>temp_tab
+    add di<span class="token punctuation">,</span><span class="token number">23</span><span class="token punctuation">;</span>和 name合并
+  <span class="token punctuation">;</span>cx
+    sub ch<span class="token punctuation">,</span>ch
+    mov cl<span class="token punctuation">,</span><span class="token maybe-class-name">PLen</span>
+  <span class="token punctuation">;</span>清空
+    cld
+
+  <span class="token punctuation">;</span>自动复制字符串
+    rep movsb
+exit2<span class="token operator">:</span>
+    ret
+input_phone endp
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+<span class="token punctuation">;</span>根据名字进行排序，首先找到插入位置，然后从最后一个表项开始前面的一个表项复制到
+<span class="token punctuation">;</span><span class="token function">后面的表项，到达插入位置后，将临时表项</span><span class="token punctuation">(</span>temp_tab<span class="token punctuation">)</span>中的内容复制到对应位置
+name_sort proc near<span class="token punctuation">;</span>恢复<span class="token constant">N</span><span class="token punctuation">,</span><span class="token constant">X</span><span class="token punctuation">,</span><span class="token constant">Y</span><span class="token punctuation">,</span><span class="token constant">Z</span>
+    cmp num<span class="token punctuation">,</span><span class="token number">0</span>
+    jnz sort
+    lea si<span class="token punctuation">,</span>temp_tab<span class="token punctuation">;</span>如果表项中没有内容，直接插入
+    lea di<span class="token punctuation">,</span>tel_tab
+    mov cx<span class="token punctuation">,</span><span class="token number">35</span><span class="token punctuation">;</span>要传送的数据段长度
+    cld
+    repz movsb
+    jmp exit3
+sort<span class="token operator">:</span>
+    mov cx<span class="token punctuation">,</span>num
+    lea si<span class="token punctuation">,</span>temp_tab
+    lea di<span class="token punctuation">,</span>tel_tab
+loopsort<span class="token operator">:</span>
+    push di
+    push cx
+    mov cx<span class="token punctuation">,</span><span class="token number">20</span>
+    repz cmpsb
+    ja move<span class="token punctuation">;</span>如果si<span class="token operator">></span>di<span class="token punctuation">,</span>则使di指向下一个表项，继续循环
+    pop cx
+    pop di
+    call insert
+    jmp exit3
+move<span class="token operator">:</span>
+    pop cx
+    pop di
+    add di<span class="token punctuation">,</span><span class="token number">35</span>
+    lea si<span class="token punctuation">,</span>temp_tab
+    loop loopsort
+    mov cx<span class="token punctuation">,</span><span class="token number">35</span><span class="token punctuation">;</span>正常退出循环，说明需要插入在最后
+    rep movsb
+exit3<span class="token operator">:</span>
+    inc num<span class="token punctuation">;</span>表项个数加<span class="token number">1</span>
+    ret
+name_sort endp<span class="token punctuation">;</span>此处，没有正确返回，因为push进去没有pop出来
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+<span class="token punctuation">;</span>进入此子程序后，cx存储着需要移动的表项个数，从后往前进行复制（移动）
+insert proc near
+    mov ax<span class="token punctuation">,</span>num<span class="token punctuation">;</span>num<span class="token operator">-</span>cx<span class="token operator">+</span><span class="token number">1</span>是位置，cx是需要移动的表项个数
+loopinsert<span class="token operator">:</span>
+    push ax
+    mov bx<span class="token punctuation">,</span><span class="token number">35</span>
+    mul bx<span class="token punctuation">;</span>字节总数<span class="token number">35</span><span class="token operator">*</span>num
+    lea di<span class="token punctuation">,</span>tel_tab
+    add di<span class="token punctuation">,</span>ax
+    mov si<span class="token punctuation">,</span>di<span class="token punctuation">;</span>di目前指向num<span class="token operator">*</span><span class="token number">35</span>
+    sub si<span class="token punctuation">,</span><span class="token number">35</span><span class="token punctuation">;</span>si目前指向num<span class="token operator">*</span><span class="token punctuation">(</span><span class="token number">35</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+    push cx
+    mov cx<span class="token punctuation">,</span><span class="token number">35</span>
+    rep movsb
+    pop cx
+    pop ax
+    dec ax
+    loop loopinsert
+
+    lea si<span class="token punctuation">,</span>temp_tab<span class="token punctuation">;</span>插入待插入位置
+    lea di<span class="token punctuation">,</span>tel_tab
+    mov bx<span class="token punctuation">,</span><span class="token number">35</span>
+    mul bx
+    add di<span class="token punctuation">,</span>ax
+    mov cx<span class="token punctuation">,</span><span class="token number">35</span>
+    rep movsb
+    ret
+insert endp
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+name_query proc near
+    call clear
+    mov ch<span class="token punctuation">,</span><span class="token number">0</span>
+    mov cl<span class="token punctuation">,</span><span class="token maybe-class-name">NLen</span>
+    lea si<span class="token punctuation">,</span>name
+    lea di<span class="token punctuation">,</span>temp_nam<span class="token punctuation">;</span>name<span class="token operator">--</span><span class="token operator">></span>temp_nam
+    rep movsb
+    mov cx<span class="token punctuation">,</span>num<span class="token punctuation">;</span>搜寻名字循环次数
+    lea di<span class="token punctuation">,</span>tel_tab
+    lea si<span class="token punctuation">,</span>temp_nam
+loopfind<span class="token operator">:</span>
+    push di
+    push cx
+    mov ch<span class="token punctuation">,</span><span class="token number">0</span>
+    mov cl<span class="token punctuation">,</span><span class="token number">20</span>
+    repz cmpsb<span class="token punctuation">;</span>为<span class="token number">0</span>时重复串操作
+    je found<span class="token punctuation">;</span>找到，则num<span class="token operator">-</span>cx为位置
+    pop cx
+    pop di
+    add di<span class="token punctuation">,</span><span class="token number">35</span><span class="token punctuation">;</span>没找到就di<span class="token operator">+</span><span class="token number">35</span>
+    lea si<span class="token punctuation">,</span>temp_nam
+    loop loopfind
+    mov cx<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">;</span>没找到
+    jmp exit4
+found<span class="token operator">:</span>
+    pop cx
+    pop di
+exit4<span class="token operator">:</span>
+    ret
+name_query endp
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+printline proc near
+    cmp cx<span class="token punctuation">,</span><span class="token number">0</span>
+    jnz next
+    mov ah<span class="token punctuation">,</span><span class="token number">09</span>
+    lea dx<span class="token punctuation">,</span>mess6<span class="token punctuation">;</span>未找到
+    int <span class="token number">21</span>h
+    jmp exit5
+next<span class="token operator">:</span>
+    lea dx<span class="token punctuation">,</span>mess5
+    mov ah<span class="token punctuation">,</span><span class="token number">09</span>
+    int <span class="token number">21</span>h
+    mov ax<span class="token punctuation">,</span>num
+    sub ax<span class="token punctuation">,</span>cx
+    mov bx<span class="token punctuation">,</span><span class="token number">35</span>
+    mul bx<span class="token punctuation">;</span><span class="token punctuation">(</span>num<span class="token operator">-</span>cx<span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">35</span>
+    lea dx<span class="token punctuation">,</span>tel_tab
+    add dx<span class="token punctuation">,</span>ax
+    mov ah<span class="token punctuation">,</span><span class="token number">09</span>
+    int <span class="token number">21</span>h
+exit5<span class="token operator">:</span>
+    ret
+printline endp
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+clear proc near
+    lea di<span class="token punctuation">,</span>temp_tab
+    xor al<span class="token punctuation">,</span>al
+    mov cx<span class="token punctuation">,</span><span class="token number">32</span>
+    rep stosb
+    lea di<span class="token punctuation">,</span>temp_nam
+    xor al<span class="token punctuation">,</span>al
+    mov cx<span class="token punctuation">,</span><span class="token number">20</span>
+    rep stosb
+    ret
+clear endp
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+codes ends
+    end start
+
+</pre></div></code-block><code-block id="mzK1o3y2aFkxFkesRDBaJm" class="wolai-block"><div class="wolai-pre"><div data-lang="6502 Assembly" class="marker"></div><pre>datas segment
+  mess1 db <span class="token string">'Input name:'</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+  mess2 db <span class="token string">'Input a telephone number:'</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+  mess3 db <span class="token string">'Do you want a telephone number?(Y/N)'</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+  mess4 db <span class="token string">'name?'</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token string">'$'</span> 
+  mess5 db <span class="token string">'name'</span><span class="token punctuation">,</span><span class="token number">19</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'tel.'</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+  mess6 db <span class="token string">'Not find!'</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+  nextline db  <span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'$'</span><span class="token punctuation">;</span>回车 换行
+  
+  <span class="token punctuation">;</span>输入的姓名
+  namein label byte
+    maxNLen db <span class="token number">20</span>
+    <span class="token maybe-class-name">NLen</span> db <span class="token operator">?</span>
+    nam db <span class="token number">20</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token string">'$'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">;</span>输入的电话号码
+  phonein label byte
+    maxPLen db <span class="token number">8</span>
+    <span class="token maybe-class-name">PLen</span> db <span class="token operator">?</span>
+    phone db <span class="token number">8</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token string">'$'</span><span class="token punctuation">)</span>
+
+  <span class="token punctuation">;</span>待查询的姓名
+  temp_nam db <span class="token number">20</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span>
+
+  <span class="token punctuation">;</span>临时一条电话簿
+  temp_tab db <span class="token number">20</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">4</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">8</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+
+  <span class="token punctuation">;</span>电话簿中已有的数据量
+  num dw <span class="token number">0</span>
+  <span class="token punctuation">;</span>电话簿
+  tel_tab db <span class="token number">50</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token number">20</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">4</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">8</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'$'</span><span class="token punctuation">)</span>
+
+datas ends
+
+stacks segment
+    dw <span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span>  
+stacks ends
+
+codes segment
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>main<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+main proc far
+    assume cs<span class="token operator">:</span>codes<span class="token punctuation">,</span>ds<span class="token operator">:</span>datas<span class="token punctuation">,</span>es<span class="token operator">:</span>datas     
+start<span class="token operator">:</span>
+  <span class="token punctuation">;</span>初始化栈
+  mov ax<span class="token punctuation">,</span>stacks
+  mov ss<span class="token punctuation">,</span>ax
+  mov sp<span class="token punctuation">,</span><span class="token number">16</span>
+
+  <span class="token punctuation">;</span>初始化代码段
+  mov ax<span class="token punctuation">,</span>datas
+  mov ds<span class="token punctuation">,</span>ax
+        
+  <span class="token punctuation">;</span>初始化拓展段
+  mov es<span class="token punctuation">,</span>ax
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>输入<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+input<span class="token operator">:</span>
+  <span class="token punctuation">;</span>输入名字
+    <span class="token punctuation">;</span>输出 提示符
+    lea dx<span class="token punctuation">,</span>mess1
+    mov ah<span class="token punctuation">,</span><span class="token number">09</span>h
+    int <span class="token number">21</span>h
+
+    <span class="token punctuation">;</span>清空各个临时变量
+    call clear
+
+    <span class="token punctuation">;</span>输入名字
+    call input_name
+
+    <span class="token punctuation">;</span>如果没有输入就退出
+    cmp <span class="token maybe-class-name">NLen</span><span class="token punctuation">,</span><span class="token number">0</span>
+    je query
+
+    <span class="token punctuation">;</span>储存名字
+    call store_name
+
+  <span class="token punctuation">;</span>输入电话号码
+    <span class="token punctuation">;</span>输出 提示符
+    lea dx<span class="token punctuation">,</span>mess2
+    mov ah<span class="token punctuation">,</span><span class="token number">09</span>h
+    int <span class="token number">21</span>h
+    <span class="token punctuation">;</span>输入 电话号码
+    call input_phone
+    call name_sort
+
+    jmp input
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>输入<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>查询<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+query<span class="token operator">:</span>
+
+  <span class="token punctuation">;</span>是否继续查询
+    <span class="token punctuation">;</span>输出 提示是否进行查询
+    mov ah<span class="token punctuation">,</span><span class="token number">09</span>
+    lea dx<span class="token punctuation">,</span>mess3
+    int <span class="token number">21</span>h
+
+    <span class="token punctuation">;</span>输入 <span class="token constant">Y</span><span class="token operator">/</span><span class="token constant">N</span>
+    mov ah<span class="token punctuation">,</span><span class="token number">01</span>h
+    int <span class="token number">21</span>h
+
+    <span class="token punctuation">;</span><span class="token keyword control-flow">if</span> <span class="token constant">N</span>
+    cmp al<span class="token punctuation">,</span><span class="token string">'N'</span>
+      je exit
+
+  <span class="token punctuation">;</span>换行
+    mov dx<span class="token punctuation">,</span>offset nextline 
+    mov  ah<span class="token punctuation">,</span><span class="token number">09</span>
+    int <span class="token number">21</span>h 
+
+  <span class="token punctuation">;</span>输入 名字
+    <span class="token punctuation">;</span>输出 提示符
+    mov ah<span class="token punctuation">,</span><span class="token number">09</span>
+    lea dx<span class="token punctuation">,</span>mess4
+    int <span class="token number">21</span>h
+    <span class="token punctuation">;</span>输入 名字
+      call input_name
+    <span class="token punctuation">;</span><span class="token keyword control-flow">if</span> 没有输入 <span class="token operator">-</span><span class="token operator">></span> 退出
+    cmp <span class="token maybe-class-name">NLen</span><span class="token punctuation">,</span><span class="token number">0</span>
+    je exit
+  <span class="token punctuation">;</span>查询
+    call name_query
+  <span class="token punctuation">;</span>输出
+    call printline
+
+    jmp query
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>查询<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+exit<span class="token operator">:</span>
+    mov ah<span class="token punctuation">,</span><span class="token number">4</span>ch
+    int <span class="token number">21</span>h
+main endp
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>main<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+
+
+input_name proc near
+<span class="token punctuation">;</span>输入名字 <span class="token operator">-</span><span class="token operator">></span> namein
+    lea dx<span class="token punctuation">,</span>namein
+    mov ah<span class="token punctuation">,</span><span class="token number">10</span>
+    int <span class="token number">21</span>h
+
+    mov dx<span class="token punctuation">,</span>offset nextline 
+    mov  ah<span class="token punctuation">,</span><span class="token number">09</span>
+    int <span class="token number">21</span>h
+
+    ret
+input_name endp
+
+
+store_name proc near
+<span class="token punctuation">;</span>copy name to temp_tab
+  <span class="token punctuation">;</span><span class="token keyword control-flow">if</span> <span class="token maybe-class-name">Nlen</span><span class="token operator">==</span><span class="token number">0</span> <span class="token operator">-</span><span class="token operator">></span> exit
+    cmp <span class="token maybe-class-name">NLen</span><span class="token punctuation">,</span><span class="token number">0</span>
+    je exit1
+
+  <span class="token punctuation">;</span>原串
+    lea si<span class="token punctuation">,</span>nam
+  <span class="token punctuation">;</span>目标串
+    lea di<span class="token punctuation">,</span>temp_tab
+  <span class="token punctuation">;</span>cx
+    sub ch<span class="token punctuation">,</span>ch
+    mov cl<span class="token punctuation">,</span><span class="token maybe-class-name">NLen</span>
+  <span class="token punctuation">;</span>清空
+    cld
+
+  <span class="token punctuation">;</span>自动复制字符串
+    rep movsb
+  
+exit1<span class="token operator">:</span>
+    ret
+store_name endp
+
+
+
+input_phone proc near
+<span class="token punctuation">;</span>输入phone 并且 和 name合并到临时串中
+  <span class="token punctuation">;</span>输入
+    lea dx<span class="token punctuation">,</span>phonein
+    mov ah<span class="token punctuation">,</span><span class="token number">10</span>
+    int <span class="token number">21</span>h
+
+    cmp <span class="token maybe-class-name">PLen</span><span class="token punctuation">,</span><span class="token number">0</span>
+    je exit2
+
+  <span class="token punctuation">;</span>换行
+    mov dx<span class="token punctuation">,</span>offset nextline 
+    mov  ah<span class="token punctuation">,</span><span class="token number">09</span>
+    int <span class="token number">21</span>h  
+
+  <span class="token punctuation">;</span>原串 
+    lea si<span class="token punctuation">,</span>phone
+  <span class="token punctuation">;</span>目标串
+    lea di<span class="token punctuation">,</span>temp_tab
+    add di<span class="token punctuation">,</span><span class="token number">23</span><span class="token punctuation">;</span>和 name合并
+  <span class="token punctuation">;</span>cx
+    sub ch<span class="token punctuation">,</span>ch
+    mov cl<span class="token punctuation">,</span><span class="token maybe-class-name">PLen</span>
+  <span class="token punctuation">;</span>清空
+    cld
+
+  <span class="token punctuation">;</span>自动复制字符串
+    rep movsb
+exit2<span class="token operator">:</span>
+    ret
+input_phone endp
+
+name_sort proc near
+<span class="token punctuation">;</span>插入排序
+  <span class="token punctuation">;</span><span class="token keyword control-flow">if</span><span class="token punctuation">(</span>num<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span>
+    cmp num<span class="token punctuation">,</span><span class="token number">0</span>
+    <span class="token punctuation">;</span>查询插入位置，并插入
+    <span class="token punctuation">;</span>插入排序
+      jnz sort
+  <span class="token punctuation">;</span><span class="token keyword control-flow">else</span>
+    <span class="token punctuation">;</span>直接插入
+    lea si<span class="token punctuation">,</span>temp_tab
+    lea di<span class="token punctuation">,</span>tel_tab
+    mov cx<span class="token punctuation">,</span><span class="token number">35</span><span class="token punctuation">;</span>要传送的数据段长度
+    cld
+    repz movsb
+    jmp exit3
+
+sort<span class="token operator">:</span>
+
+    mov cx<span class="token punctuation">,</span>num
+  <span class="token punctuation">;</span>待插入的串
+    lea si<span class="token punctuation">,</span>temp_tab
+  <span class="token punctuation">;</span>当前比较项（从头开始）
+    lea di<span class="token punctuation">,</span>tel_tab
+
+loopsort<span class="token operator">:</span>
+    push di
+    push cx
+    mov cx<span class="token punctuation">,</span><span class="token number">20</span>
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>内循环<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+    repz cmpsb
+  <span class="token punctuation">;</span>如果si<span class="token operator">></span>di<span class="token punctuation">,</span>则使di指向下一个表项，继续循环
+    ja next_tab
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>内循环<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>  
+    pop cx
+    pop di
+    call insert
+    jmp exit3
+next_tab<span class="token operator">:</span>
+    pop cx
+    pop di
+    add di<span class="token punctuation">,</span><span class="token number">35</span>
+    lea si<span class="token punctuation">,</span>temp_tab
+    loop loopsort
+    mov cx<span class="token punctuation">,</span><span class="token number">35</span><span class="token punctuation">;</span>正常退出循环，说明需要插入在最后
+    rep movsb
+
+exit3<span class="token operator">:</span>
+  <span class="token punctuation">;</span>num<span class="token operator">++</span>
+    inc num
+    ret
+name_sort endp<span class="token punctuation">;</span>此处，没有正确返回，因为push进去没有pop出来
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+<span class="token punctuation">;</span>进入此子程序后，cx存储着需要移动的表项个数，从后往前进行复制（移动）
+
+insert proc near
+    mov ax<span class="token punctuation">,</span>num<span class="token punctuation">;</span>num<span class="token operator">-</span>cx<span class="token operator">+</span><span class="token number">1</span>是位置，cx是需要移动的表项个数
+loopinsert<span class="token operator">:</span>
+    push ax
+    mov bx<span class="token punctuation">,</span><span class="token number">35</span>
+    mul bx<span class="token punctuation">;</span>字节总数<span class="token number">35</span><span class="token operator">*</span>num
+    lea di<span class="token punctuation">,</span>tel_tab
+    add di<span class="token punctuation">,</span>ax
+    mov si<span class="token punctuation">,</span>di<span class="token punctuation">;</span>di目前指向num<span class="token operator">*</span><span class="token number">35</span>
+    sub si<span class="token punctuation">,</span><span class="token number">35</span><span class="token punctuation">;</span>si目前指向num<span class="token operator">*</span><span class="token punctuation">(</span><span class="token number">35</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+    push cx
+    mov cx<span class="token punctuation">,</span><span class="token number">35</span>
+    rep movsb
+    pop cx
+    pop ax
+    dec ax
+    loop loopinsert
+
+    lea si<span class="token punctuation">,</span>temp_tab<span class="token punctuation">;</span>插入待插入位置
+    lea di<span class="token punctuation">,</span>tel_tab
+    mov bx<span class="token punctuation">,</span><span class="token number">35</span>
+    mul bx
+    add di<span class="token punctuation">,</span>ax
+    mov cx<span class="token punctuation">,</span><span class="token number">35</span>
+    rep movsb
+    ret
+insert endp
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+name_query proc near
+    call clear
+    mov ch<span class="token punctuation">,</span><span class="token number">0</span>
+    mov cl<span class="token punctuation">,</span><span class="token maybe-class-name">NLen</span>
+    lea si<span class="token punctuation">,</span>nam
+    lea di<span class="token punctuation">,</span>temp_nam<span class="token punctuation">;</span>name<span class="token operator">--</span><span class="token operator">></span>temp_nam
+    rep movsb
+    mov cx<span class="token punctuation">,</span>num<span class="token punctuation">;</span>搜寻名字循环次数
+    lea di<span class="token punctuation">,</span>tel_tab
+    lea si<span class="token punctuation">,</span>temp_nam
+loopfind<span class="token operator">:</span>
+    push di
+    push cx
+    mov ch<span class="token punctuation">,</span><span class="token number">0</span>
+    mov cl<span class="token punctuation">,</span><span class="token number">20</span>
+    repz cmpsb<span class="token punctuation">;</span>为<span class="token number">0</span>时重复串操作
+    je found<span class="token punctuation">;</span>找到，则num<span class="token operator">-</span>cx为位置
+    pop cx
+    pop di
+    add di<span class="token punctuation">,</span><span class="token number">35</span><span class="token punctuation">;</span>没找到就di<span class="token operator">+</span><span class="token number">35</span>
+    lea si<span class="token punctuation">,</span>temp_nam
+    loop loopfind
+    mov cx<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">;</span>没找到
+    jmp exit4
+found<span class="token operator">:</span>
+    pop cx
+    pop di
+exit4<span class="token operator">:</span>
+    ret
+name_query endp
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+printline proc near
+    cmp cx<span class="token punctuation">,</span><span class="token number">0</span>
+    jnz next
+    mov ah<span class="token punctuation">,</span><span class="token number">09</span>
+    lea dx<span class="token punctuation">,</span>mess6<span class="token punctuation">;</span>未找到
+    int <span class="token number">21</span>h
+    jmp exit5
+next<span class="token operator">:</span>
+    lea dx<span class="token punctuation">,</span>mess5
+    mov ah<span class="token punctuation">,</span><span class="token number">09</span>
+    int <span class="token number">21</span>h
+    mov ax<span class="token punctuation">,</span>num
+    sub ax<span class="token punctuation">,</span>cx
+    mov bx<span class="token punctuation">,</span><span class="token number">35</span>
+    mul bx<span class="token punctuation">;</span><span class="token punctuation">(</span>num<span class="token operator">-</span>cx<span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">35</span>
+    lea dx<span class="token punctuation">,</span>tel_tab
+    add dx<span class="token punctuation">,</span>ax
+    mov ah<span class="token punctuation">,</span><span class="token number">09</span>
+    int <span class="token number">21</span>h
+exit5<span class="token operator">:</span>
+    ret
+printline endp
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+clear proc near
+    lea di<span class="token punctuation">,</span>temp_tab
+    xor al<span class="token punctuation">,</span>al
+    mov cx<span class="token punctuation">,</span><span class="token number">32</span>
+    rep stosb
+    lea di<span class="token punctuation">,</span>temp_nam
+    xor al<span class="token punctuation">,</span>al
+    mov cx<span class="token punctuation">,</span><span class="token number">20</span>
+    rep stosb
+    ret
+clear endp
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+codes ends
+    end start
+</pre></div></code-block><code-block id="p63c4uFXmQRB6W3sCBiYA3" class="wolai-block"><div class="wolai-pre"><div data-lang="6502 Assembly" class="marker"></div><pre>datas   segment 
+
+  result db        <span class="token number">1</span>d<span class="token punctuation">,</span><span class="token number">24</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+        x  db        <span class="token number">1</span>d<span class="token punctuation">,</span><span class="token number">24</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+    mess0  db        <span class="token number">0</span>dh<span class="token punctuation">,</span><span class="token number">0</span>ah<span class="token punctuation">,</span><span class="token string">'=================================='</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+    mess1  db        <span class="token number">0</span>dh<span class="token punctuation">,</span><span class="token number">0</span>ah<span class="token punctuation">,</span><span class="token string">'Please choose a data from 1 to 100:'</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+    mess2  db        <span class="token string">'The result is:'</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+    mess3  db        <span class="token number">0</span>dh<span class="token punctuation">,</span><span class="token number">0</span>ah<span class="token punctuation">,</span><span class="token string">'Press Q/q to exit.'</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+   mess4  db        <span class="token number">0</span>dh<span class="token punctuation">,</span><span class="token number">0</span>ah<span class="token punctuation">,</span><span class="token string">'You have typed Q/q to exit.'</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+  mess5  db        <span class="token number">0</span>dh<span class="token punctuation">,</span><span class="token number">0</span>ah<span class="token punctuation">,</span><span class="token string">'Input error,please re-enter.'</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+     flag  dw        <span class="token operator">?</span>
+
+datas  ends
+
+stacks segment
+    dw <span class="token number">32</span> <span class="token constant">DUP</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>  
+stacks ends
+
+codes  segment
+main       proc      far
+assume    cs<span class="token operator">:</span>codes<span class="token punctuation">,</span>ds<span class="token operator">:</span>datas<span class="token punctuation">,</span>ss<span class="token operator">:</span>stacks<span class="token punctuation">,</span>es<span class="token operator">:</span>datas
+start<span class="token operator">:</span>
+     <span class="token punctuation">;</span>初始化栈
+        mov     ax<span class="token punctuation">,</span>stacks
+        mov     ss<span class="token punctuation">,</span>ax
+        mov     sp<span class="token punctuation">,</span><span class="token number">16</span>
+
+        <span class="token punctuation">;</span>初始化代码段
+        mov     ax<span class="token punctuation">,</span>datas
+        mov     ds<span class="token punctuation">,</span>ax
+        
+        <span class="token punctuation">;</span>初始化拓展段
+        mov     es<span class="token punctuation">,</span>ax
+loopinput<span class="token operator">:</span>
+    <span class="token punctuation">;</span><span class="token operator">===</span><span class="token operator">===</span><span class="token operator">===</span><span class="token operator">===</span><span class="token operator">===</span><span class="token operator">===</span><span class="token operator">===</span><span class="token operator">===</span><span class="token operator">===</span><span class="token operator">===</span><span class="token operator">===</span><span class="token operator">=</span>
+    mov       ah<span class="token punctuation">,</span><span class="token number">09</span>
+    lea       dx<span class="token punctuation">,</span>mess0
+    int       <span class="token number">21</span>h
+
+
+
+    <span class="token punctuation">;</span><span class="token maybe-class-name">Press</span> <span class="token constant">Q</span><span class="token operator">/</span>q to exit<span class="token punctuation">.</span>
+    <span class="token property-access">mov</span>       ah<span class="token punctuation">,</span><span class="token number">09</span>       
+    lea       dx<span class="token punctuation">,</span>mess3
+    int       <span class="token number">21</span>h
+
+    <span class="token punctuation">;</span><span class="token maybe-class-name">Please</span> choose a data <span class="token keyword module">from</span> <span class="token number">1</span> to <span class="token number">100</span><span class="token operator">:</span>
+    lea       dx<span class="token punctuation">,</span>mess1
+    int       <span class="token number">21</span>h
+    
+input<span class="token operator">:</span>
+    mov       bx<span class="token punctuation">,</span><span class="token number">0</span>
+    <span class="token punctuation">;</span>输入
+    mov       ah<span class="token punctuation">,</span><span class="token number">01</span>
+    int       <span class="token number">21</span>h
+    <span class="token punctuation">;</span>是否退出
+    cmp       al<span class="token punctuation">,</span><span class="token string">'q'</span>      <span class="token punctuation">;</span>判断输入是否为q
+    jz        exit        <span class="token punctuation">;</span>跳转到exit
+    cmp       al<span class="token punctuation">,</span><span class="token string">'Q'</span>
+    jz        exit
+    <span class="token punctuation">;</span>是否是数字
+    <span class="token punctuation">;</span>出口：输入回车
+    cmp       al<span class="token punctuation">,</span><span class="token number">0</span>dh
+
+    jz        cont
+    cmp       al<span class="token punctuation">,</span><span class="token string">'0'</span>      
+    jb        error       
+    cmp       al<span class="token punctuation">,</span><span class="token string">':'</span>
+    jnb       error 
+    <span class="token punctuation">;</span>从<span class="token constant">ASCLL</span>码变成数字
+    sub       al<span class="token punctuation">,</span><span class="token number">30</span>h
+    mov       ah<span class="token punctuation">,</span><span class="token number">0</span>
+    <span class="token punctuation">;</span> bx<span class="token operator">=</span>bx<span class="token operator">+</span>bx<span class="token operator">*</span><span class="token number">10</span>
+    xchg      ax<span class="token punctuation">,</span>bx
+    mov       cx<span class="token punctuation">,</span><span class="token number">10</span>d    
+    mul       cx<span class="token punctuation">;</span> <span class="token punctuation">(</span><span class="token constant">DX</span><span class="token punctuation">,</span> <span class="token constant">AX</span><span class="token punctuation">)</span> <span class="token function">←</span>  <span class="token punctuation">(</span><span class="token constant">AX</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token constant">SRC</span><span class="token punctuation">)</span>
+    xchg      ax<span class="token punctuation">,</span>bx
+    add       bx<span class="token punctuation">,</span>ax
+jmp       input
+
+error<span class="token operator">:</span>  <span class="token punctuation">;</span>提示出错信息
+    <span class="token punctuation">;</span><span class="token maybe-class-name">Input</span> error<span class="token punctuation">,</span>please re<span class="token operator">-</span>enter<span class="token punctuation">.</span>
+    <span class="token property-access">mov</span>       ah<span class="token punctuation">,</span><span class="token number">09</span>
+    lea       dx<span class="token punctuation">,</span>mess5
+    int       <span class="token number">21</span>h
+
+
+jmp       loopinput 
+
+exit<span class="token operator">:</span>  <span class="token punctuation">;</span>提示已退出程序信息
+    mov       ah<span class="token punctuation">,</span><span class="token number">09</span>
+    lea       dx<span class="token punctuation">,</span>mess4
+    int       <span class="token number">21</span>h
+    mov       ah<span class="token punctuation">,</span><span class="token number">4</span>ch
+    int       <span class="token number">21</span>h
+    ret
+cont<span class="token operator">:</span>  
+    cmp       bx<span class="token punctuation">,</span><span class="token number">0</span>
+    jz        error
+    mov       cx<span class="token punctuation">,</span>bx       <span class="token punctuation">;</span>输入的数放到cx中
+    cmp       cx<span class="token punctuation">,</span><span class="token number">2</span>
+    jle       call_f
+      <span class="token punctuation">;</span>如果小于等于<span class="token number">2</span>，就直接输出结果
+    sub       cx<span class="token punctuation">,</span><span class="token number">2</span>        <span class="token punctuation">;</span>否则以cx<span class="token operator">-</span><span class="token number">2</span>作为外循环，把两个数相加
+next<span class="token operator">:</span>  
+    mov       di<span class="token punctuation">,</span>cx
+    mov       cx<span class="token punctuation">,</span><span class="token number">25</span>
+    mov       si<span class="token punctuation">,</span><span class="token number">0</span>
+adde<span class="token operator">:</span>  
+    mov       dl<span class="token punctuation">,</span>x<span class="token punctuation">[</span>si<span class="token punctuation">]</span>
+    mov       dh<span class="token punctuation">,</span>result<span class="token punctuation">[</span>si<span class="token punctuation">]</span>
+    add       dl<span class="token punctuation">,</span>dh       <span class="token punctuation">;</span>将两个存储单元的数中进行相加
+    mov       result<span class="token punctuation">[</span>si<span class="token punctuation">]</span><span class="token punctuation">,</span>dl
+    mov       x<span class="token punctuation">[</span>si<span class="token punctuation">]</span><span class="token punctuation">,</span>dh    <span class="token punctuation">;</span>将上次的相加结果放入<span class="token constant">X</span>中
+    cmp       dl<span class="token punctuation">,</span><span class="token number">10</span>d
+    jae       great       <span class="token punctuation">;</span>如果大于<span class="token number">10</span><span class="token maybe-class-name">D，则转移</span>
+    inc       si
+    jmp       goon
+great<span class="token operator">:</span>  
+    sub       result<span class="token punctuation">[</span>si<span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token number">10</span>d          <span class="token punctuation">;</span>将尾数存入本单元
+    inc       si
+    add       x<span class="token punctuation">[</span>si<span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token number">1</span>     <span class="token punctuation">;</span>高位加<span class="token number">1</span>
+goon<span class="token operator">:</span>  
+    loop      adde
+    mov       cx<span class="token punctuation">,</span>di
+    loop      next
+call_f<span class="token operator">:</span>
+    call      fibp
+    pop       di          <span class="token punctuation">;</span>出栈
+    pop       si
+    pop       dx
+    pop       cx
+    pop       bx
+    pop       ax
+    jmp       loopinput     <span class="token punctuation">;</span>跳转回开始状态，进行下一次计算  
+    mov       ah<span class="token punctuation">,</span><span class="token number">4</span>ch
+    int       <span class="token number">21</span>h
+main      endp
+
+fibp       proc      near
+print<span class="token operator">:</span>  
+    lea       dx<span class="token punctuation">,</span>mess2    <span class="token punctuation">;</span>输出显示提示
+    mov       ah<span class="token punctuation">,</span><span class="token number">09</span>
+    int       <span class="token number">21</span>h
+    mov       cx<span class="token punctuation">,</span><span class="token number">25</span>
+    mov       si<span class="token punctuation">,</span><span class="token number">24</span>
+display1<span class="token operator">:</span>  
+    cmp       flag<span class="token punctuation">,</span><span class="token number">0</span>      <span class="token punctuation">;</span>标志位判断输出的高位是否为<span class="token number">0</span>
+    jnz       n2
+    cmp       result<span class="token punctuation">[</span>si<span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token number">0</span>
+    jz        n3
+    add       flag<span class="token punctuation">,</span><span class="token number">1</span>
+n2<span class="token operator">:</span>  
+    mov       dl<span class="token punctuation">,</span>result<span class="token punctuation">[</span>si<span class="token punctuation">]</span><span class="token punctuation">;</span>以十进制输出
+    add       dl<span class="token punctuation">,</span><span class="token number">30</span>h
+    mov       ah<span class="token punctuation">,</span><span class="token number">02</span>h
+    int       <span class="token number">21</span>h
+n3<span class="token operator">:</span>  
+    dec       si
+    loop      display1
+    mov       flag<span class="token punctuation">,</span><span class="token number">0</span>
+    mov       result<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token number">1</span>d
+    mov       x<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token number">1</span>d
+    mov       si<span class="token punctuation">,</span><span class="token number">1</span>
+    mov       cx<span class="token punctuation">,</span><span class="token number">24</span>
+initial<span class="token operator">:</span>  
+    mov       result<span class="token punctuation">[</span>si<span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token number">0</span>
+    mov       x<span class="token punctuation">[</span>si<span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token number">0</span>
+    add       si<span class="token punctuation">,</span><span class="token number">1</span>
+    loop      initial
+    mov       si<span class="token punctuation">,</span><span class="token number">0</span>
+    ret
+fibp   endp
+codes  ends 
+        end     main     
+</pre></div></code-block><div id="wp3WphLjhc6SwrtAxxxwpU" class="wolai-file-block wolai-block"><div class="file-icon" style="background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&apos;http://www.w3.org/2000/svg&apos; width=&apos;24&apos; height=&apos;24&apos; viewBox=&apos;0 0 24 24&apos;%3E%3Cdefs%3E%3ClinearGradient x1=&apos;17.357%25&apos; y1=&apos;-6.509%25&apos; x2=&apos;82.643%25&apos; y2=&apos;106.509%25&apos; id=&apos;file-word_svg__a&apos;%3E%3Cstop stop-color=&apos;%23FFF&apos; stop-opacity=&apos;0.5&apos; offset=&apos;0%25&apos;%3E%3C/stop%3E%3Cstop stop-opacity=&apos;0.7&apos; offset=&apos;100%25&apos;%3E%3C/stop%3E%3C/linearGradient%3E%3C/defs%3E%3Cg transform=&apos;translate(1 2.99)&apos; fill-rule=&apos;nonzero&apos; fill=&apos;none&apos;%3E%3Cpath d=&apos;M6.21 18.01h13.52a.84.84 0 00.85-.84v-3.65H5.37v3.66a.83.83 0 00.84.83z&apos; fill=&apos;%23103F91&apos;%3E%3C/path%3E%3Cpath d=&apos;M19.73.01H6.21a.83.83 0 00-.84.84v3.66h15.21V.84a.83.83 0 00-.85-.83z&apos; fill=&apos;%2341A5EE&apos;%3E%3C/path%3E%3Cpath fill=&apos;%23185ABD&apos; d=&apos;M5.37 9.01h15.21v4.51H5.37z&apos;%3E%3C/path%3E%3Cpath fill=&apos;%232B7CD3&apos; d=&apos;M5.37 4.5h15.21v4.51H5.37z&apos;%3E%3C/path%3E%3Cg fill=&apos;%23FFF&apos;%3E%3Crect x=&apos;0.86&apos; y=&apos;0.93&apos; width=&apos;10.14&apos; height=&apos;10.14&apos; rx=&apos;0.85&apos; opacity=&apos;0.48&apos; transform=&apos;translate(0 3.01)&apos;%3E%3C/rect%3E%3Crect x=&apos;0.86&apos; y=&apos;0.93&apos; width=&apos;10.14&apos; height=&apos;10.14&apos; rx=&apos;0.85&apos; opacity=&apos;0.24&apos; transform=&apos;translate(0 3.01)&apos;%3E%3C/rect%3E%3C/g%3E%3Crect fill=&apos;%23185ABD&apos; x=&apos;0.86&apos; y=&apos;3.94&apos; width=&apos;10.14&apos; height=&apos;10.14&apos; rx=&apos;0.85&apos;%3E%3C/rect%3E%3Crect x=&apos;0.86&apos; y=&apos;0.93&apos; width=&apos;10.14&apos; height=&apos;10.14&apos; rx=&apos;0.85&apos; opacity=&apos;0.5&apos; transform=&apos;translate(0 3.01)&apos; fill=&apos;url(%23file-word_svg__a)&apos;%3E%3C/rect%3E%3Cpath d=&apos;M4.33 10.42V10.43a2.09 2.09 0 01.07-.33l.88-3.84h1.15l1.01 3.75c.058.233.098.47.12.71 0-.2.05-.43.1-.69l.73-3.8h1.05l-1.29 5.5H6.94l-.88-3.64c0-.11-.05-.24-.08-.41a8.48 8.48 0 01-.06-.37c0 .09 0 .22-.06.4-.06.18-.05.3-.07.39L5 11.76H3.71l-1.3-5.5h1.06l.8 3.85c.026.102.046.206.06.31z&apos; fill=&apos;%23FFF&apos;%3E%3C/path%3E%3C/g%3E%3C/svg%3E&quot;);"></div><a href="media/%E7%89%A9%E8%81%941702+0919170210+%E4%B9%94%E6%A5%A0+%E6%9F%A5%E6%89%BE%E7%94%B5%E8%AF%9D%E5%8F%B7%E7%A0%81.docx"><span>物联1702+0919170210+乔楠+查找电话号码.docx</span><span data-size="251.03 kB" class="file-size"></span></a></div><div id="bsGQXzAf8ge6LKuE1Hzwd8" class="wolai-file-block wolai-block"><div class="file-icon" style="background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&apos;http://www.w3.org/2000/svg&apos; width=&apos;24&apos; height=&apos;24&apos; viewBox=&apos;0 0 24 24&apos;%3E%3Cdefs%3E%3ClinearGradient x1=&apos;17.357%25&apos; y1=&apos;-6.509%25&apos; x2=&apos;82.643%25&apos; y2=&apos;106.509%25&apos; id=&apos;file-word_svg__a&apos;%3E%3Cstop stop-color=&apos;%23FFF&apos; stop-opacity=&apos;0.5&apos; offset=&apos;0%25&apos;%3E%3C/stop%3E%3Cstop stop-opacity=&apos;0.7&apos; offset=&apos;100%25&apos;%3E%3C/stop%3E%3C/linearGradient%3E%3C/defs%3E%3Cg transform=&apos;translate(1 2.99)&apos; fill-rule=&apos;nonzero&apos; fill=&apos;none&apos;%3E%3Cpath d=&apos;M6.21 18.01h13.52a.84.84 0 00.85-.84v-3.65H5.37v3.66a.83.83 0 00.84.83z&apos; fill=&apos;%23103F91&apos;%3E%3C/path%3E%3Cpath d=&apos;M19.73.01H6.21a.83.83 0 00-.84.84v3.66h15.21V.84a.83.83 0 00-.85-.83z&apos; fill=&apos;%2341A5EE&apos;%3E%3C/path%3E%3Cpath fill=&apos;%23185ABD&apos; d=&apos;M5.37 9.01h15.21v4.51H5.37z&apos;%3E%3C/path%3E%3Cpath fill=&apos;%232B7CD3&apos; d=&apos;M5.37 4.5h15.21v4.51H5.37z&apos;%3E%3C/path%3E%3Cg fill=&apos;%23FFF&apos;%3E%3Crect x=&apos;0.86&apos; y=&apos;0.93&apos; width=&apos;10.14&apos; height=&apos;10.14&apos; rx=&apos;0.85&apos; opacity=&apos;0.48&apos; transform=&apos;translate(0 3.01)&apos;%3E%3C/rect%3E%3Crect x=&apos;0.86&apos; y=&apos;0.93&apos; width=&apos;10.14&apos; height=&apos;10.14&apos; rx=&apos;0.85&apos; opacity=&apos;0.24&apos; transform=&apos;translate(0 3.01)&apos;%3E%3C/rect%3E%3C/g%3E%3Crect fill=&apos;%23185ABD&apos; x=&apos;0.86&apos; y=&apos;3.94&apos; width=&apos;10.14&apos; height=&apos;10.14&apos; rx=&apos;0.85&apos;%3E%3C/rect%3E%3Crect x=&apos;0.86&apos; y=&apos;0.93&apos; width=&apos;10.14&apos; height=&apos;10.14&apos; rx=&apos;0.85&apos; opacity=&apos;0.5&apos; transform=&apos;translate(0 3.01)&apos; fill=&apos;url(%23file-word_svg__a)&apos;%3E%3C/rect%3E%3Cpath d=&apos;M4.33 10.42V10.43a2.09 2.09 0 01.07-.33l.88-3.84h1.15l1.01 3.75c.058.233.098.47.12.71 0-.2.05-.43.1-.69l.73-3.8h1.05l-1.29 5.5H6.94l-.88-3.64c0-.11-.05-.24-.08-.41a8.48 8.48 0 01-.06-.37c0 .09 0 .22-.06.4-.06.18-.05.3-.07.39L5 11.76H3.71l-1.3-5.5h1.06l.8 3.85c.026.102.046.206.06.31z&apos; fill=&apos;%23FFF&apos;%3E%3C/path%3E%3C/g%3E%3C/svg%3E&quot;);"></div><a href="media/%E7%89%A9%E8%81%941702+0919170210+%E4%B9%94%E6%A5%A0+%E6%9F%A5%E6%89%BE%E5%8C%B9%E9%85%8D%E5%AD%97%E7%AC%A6%E4%B8%B2.docx"><span>物联1702+0919170210+乔楠+查找匹配字符串.docx</span><span data-size="312.33 kB" class="file-size"></span></a></div><div id="7f7LFqcafgrNSLic1kFWjr" class="wolai-file-block wolai-block"><div class="file-icon" style="background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&apos;http://www.w3.org/2000/svg&apos; width=&apos;24&apos; height=&apos;24&apos; viewBox=&apos;0 0 24 24&apos;%3E%3Cdefs%3E%3ClinearGradient x1=&apos;17.357%25&apos; y1=&apos;-6.509%25&apos; x2=&apos;82.643%25&apos; y2=&apos;106.509%25&apos; id=&apos;file-word_svg__a&apos;%3E%3Cstop stop-color=&apos;%23FFF&apos; stop-opacity=&apos;0.5&apos; offset=&apos;0%25&apos;%3E%3C/stop%3E%3Cstop stop-opacity=&apos;0.7&apos; offset=&apos;100%25&apos;%3E%3C/stop%3E%3C/linearGradient%3E%3C/defs%3E%3Cg transform=&apos;translate(1 2.99)&apos; fill-rule=&apos;nonzero&apos; fill=&apos;none&apos;%3E%3Cpath d=&apos;M6.21 18.01h13.52a.84.84 0 00.85-.84v-3.65H5.37v3.66a.83.83 0 00.84.83z&apos; fill=&apos;%23103F91&apos;%3E%3C/path%3E%3Cpath d=&apos;M19.73.01H6.21a.83.83 0 00-.84.84v3.66h15.21V.84a.83.83 0 00-.85-.83z&apos; fill=&apos;%2341A5EE&apos;%3E%3C/path%3E%3Cpath fill=&apos;%23185ABD&apos; d=&apos;M5.37 9.01h15.21v4.51H5.37z&apos;%3E%3C/path%3E%3Cpath fill=&apos;%232B7CD3&apos; d=&apos;M5.37 4.5h15.21v4.51H5.37z&apos;%3E%3C/path%3E%3Cg fill=&apos;%23FFF&apos;%3E%3Crect x=&apos;0.86&apos; y=&apos;0.93&apos; width=&apos;10.14&apos; height=&apos;10.14&apos; rx=&apos;0.85&apos; opacity=&apos;0.48&apos; transform=&apos;translate(0 3.01)&apos;%3E%3C/rect%3E%3Crect x=&apos;0.86&apos; y=&apos;0.93&apos; width=&apos;10.14&apos; height=&apos;10.14&apos; rx=&apos;0.85&apos; opacity=&apos;0.24&apos; transform=&apos;translate(0 3.01)&apos;%3E%3C/rect%3E%3C/g%3E%3Crect fill=&apos;%23185ABD&apos; x=&apos;0.86&apos; y=&apos;3.94&apos; width=&apos;10.14&apos; height=&apos;10.14&apos; rx=&apos;0.85&apos;%3E%3C/rect%3E%3Crect x=&apos;0.86&apos; y=&apos;0.93&apos; width=&apos;10.14&apos; height=&apos;10.14&apos; rx=&apos;0.85&apos; opacity=&apos;0.5&apos; transform=&apos;translate(0 3.01)&apos; fill=&apos;url(%23file-word_svg__a)&apos;%3E%3C/rect%3E%3Cpath d=&apos;M4.33 10.42V10.43a2.09 2.09 0 01.07-.33l.88-3.84h1.15l1.01 3.75c.058.233.098.47.12.71 0-.2.05-.43.1-.69l.73-3.8h1.05l-1.29 5.5H6.94l-.88-3.64c0-.11-.05-.24-.08-.41a8.48 8.48 0 01-.06-.37c0 .09 0 .22-.06.4-.06.18-.05.3-.07.39L5 11.76H3.71l-1.3-5.5h1.06l.8 3.85c.026.102.046.206.06.31z&apos; fill=&apos;%23FFF&apos;%3E%3C/path%3E%3C/g%3E%3C/svg%3E&quot;);"></div><a href="media/%E7%89%A9%E8%81%941702+0919170210+%E4%B9%94%E6%A5%A0+%E5%88%86%E7%B1%BB%E7%BB%9F%E8%AE%A1%E5%AD%97%E7%AC%A6%E4%B8%AA%E6%95%B0.docx"><span>物联1702+0919170210+乔楠+分类统计字符个数.docx</span><span data-size="292.39 kB" class="file-size"></span></a></div><div id="4gXTTZxiNbdQDNB2ddaHQK" class="wolai-file-block wolai-block"><div class="file-icon" style="background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&apos;http://www.w3.org/2000/svg&apos; width=&apos;24&apos; height=&apos;24&apos; viewBox=&apos;0 0 24 24&apos;%3E%3Cdefs%3E%3ClinearGradient x1=&apos;17.357%25&apos; y1=&apos;-6.509%25&apos; x2=&apos;82.643%25&apos; y2=&apos;106.509%25&apos; id=&apos;file-word_svg__a&apos;%3E%3Cstop stop-color=&apos;%23FFF&apos; stop-opacity=&apos;0.5&apos; offset=&apos;0%25&apos;%3E%3C/stop%3E%3Cstop stop-opacity=&apos;0.7&apos; offset=&apos;100%25&apos;%3E%3C/stop%3E%3C/linearGradient%3E%3C/defs%3E%3Cg transform=&apos;translate(1 2.99)&apos; fill-rule=&apos;nonzero&apos; fill=&apos;none&apos;%3E%3Cpath d=&apos;M6.21 18.01h13.52a.84.84 0 00.85-.84v-3.65H5.37v3.66a.83.83 0 00.84.83z&apos; fill=&apos;%23103F91&apos;%3E%3C/path%3E%3Cpath d=&apos;M19.73.01H6.21a.83.83 0 00-.84.84v3.66h15.21V.84a.83.83 0 00-.85-.83z&apos; fill=&apos;%2341A5EE&apos;%3E%3C/path%3E%3Cpath fill=&apos;%23185ABD&apos; d=&apos;M5.37 9.01h15.21v4.51H5.37z&apos;%3E%3C/path%3E%3Cpath fill=&apos;%232B7CD3&apos; d=&apos;M5.37 4.5h15.21v4.51H5.37z&apos;%3E%3C/path%3E%3Cg fill=&apos;%23FFF&apos;%3E%3Crect x=&apos;0.86&apos; y=&apos;0.93&apos; width=&apos;10.14&apos; height=&apos;10.14&apos; rx=&apos;0.85&apos; opacity=&apos;0.48&apos; transform=&apos;translate(0 3.01)&apos;%3E%3C/rect%3E%3Crect x=&apos;0.86&apos; y=&apos;0.93&apos; width=&apos;10.14&apos; height=&apos;10.14&apos; rx=&apos;0.85&apos; opacity=&apos;0.24&apos; transform=&apos;translate(0 3.01)&apos;%3E%3C/rect%3E%3C/g%3E%3Crect fill=&apos;%23185ABD&apos; x=&apos;0.86&apos; y=&apos;3.94&apos; width=&apos;10.14&apos; height=&apos;10.14&apos; rx=&apos;0.85&apos;%3E%3C/rect%3E%3Crect x=&apos;0.86&apos; y=&apos;0.93&apos; width=&apos;10.14&apos; height=&apos;10.14&apos; rx=&apos;0.85&apos; opacity=&apos;0.5&apos; transform=&apos;translate(0 3.01)&apos; fill=&apos;url(%23file-word_svg__a)&apos;%3E%3C/rect%3E%3Cpath d=&apos;M4.33 10.42V10.43a2.09 2.09 0 01.07-.33l.88-3.84h1.15l1.01 3.75c.058.233.098.47.12.71 0-.2.05-.43.1-.69l.73-3.8h1.05l-1.29 5.5H6.94l-.88-3.64c0-.11-.05-.24-.08-.41a8.48 8.48 0 01-.06-.37c0 .09 0 .22-.06.4-.06.18-.05.3-.07.39L5 11.76H3.71l-1.3-5.5h1.06l.8 3.85c.026.102.046.206.06.31z&apos; fill=&apos;%23FFF&apos;%3E%3C/path%3E%3C/g%3E%3C/svg%3E&quot;);"></div><a href="media/%E7%89%A9%E8%81%941702+0919170210+%E4%B9%94%E6%A5%A0+%E6%B1%87%E7%BC%96%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.docx"><span>物联1702+0919170210+乔楠+汇编实验报告.docx</span><span data-size="1.07 MB" class="file-size"></span></a></div><div id="sBEXiDfSDQT1ZhYdT7ArsV" class="wolai-file-block wolai-block"><div class="file-icon" style="background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&apos;http://www.w3.org/2000/svg&apos; width=&apos;24&apos; height=&apos;24&apos; viewBox=&apos;0 0 24 24&apos;%3E%3Cdefs%3E%3ClinearGradient x1=&apos;17.357%25&apos; y1=&apos;-6.509%25&apos; x2=&apos;82.643%25&apos; y2=&apos;106.509%25&apos; id=&apos;file-word_svg__a&apos;%3E%3Cstop stop-color=&apos;%23FFF&apos; stop-opacity=&apos;0.5&apos; offset=&apos;0%25&apos;%3E%3C/stop%3E%3Cstop stop-opacity=&apos;0.7&apos; offset=&apos;100%25&apos;%3E%3C/stop%3E%3C/linearGradient%3E%3C/defs%3E%3Cg transform=&apos;translate(1 2.99)&apos; fill-rule=&apos;nonzero&apos; fill=&apos;none&apos;%3E%3Cpath d=&apos;M6.21 18.01h13.52a.84.84 0 00.85-.84v-3.65H5.37v3.66a.83.83 0 00.84.83z&apos; fill=&apos;%23103F91&apos;%3E%3C/path%3E%3Cpath d=&apos;M19.73.01H6.21a.83.83 0 00-.84.84v3.66h15.21V.84a.83.83 0 00-.85-.83z&apos; fill=&apos;%2341A5EE&apos;%3E%3C/path%3E%3Cpath fill=&apos;%23185ABD&apos; d=&apos;M5.37 9.01h15.21v4.51H5.37z&apos;%3E%3C/path%3E%3Cpath fill=&apos;%232B7CD3&apos; d=&apos;M5.37 4.5h15.21v4.51H5.37z&apos;%3E%3C/path%3E%3Cg fill=&apos;%23FFF&apos;%3E%3Crect x=&apos;0.86&apos; y=&apos;0.93&apos; width=&apos;10.14&apos; height=&apos;10.14&apos; rx=&apos;0.85&apos; opacity=&apos;0.48&apos; transform=&apos;translate(0 3.01)&apos;%3E%3C/rect%3E%3Crect x=&apos;0.86&apos; y=&apos;0.93&apos; width=&apos;10.14&apos; height=&apos;10.14&apos; rx=&apos;0.85&apos; opacity=&apos;0.24&apos; transform=&apos;translate(0 3.01)&apos;%3E%3C/rect%3E%3C/g%3E%3Crect fill=&apos;%23185ABD&apos; x=&apos;0.86&apos; y=&apos;3.94&apos; width=&apos;10.14&apos; height=&apos;10.14&apos; rx=&apos;0.85&apos;%3E%3C/rect%3E%3Crect x=&apos;0.86&apos; y=&apos;0.93&apos; width=&apos;10.14&apos; height=&apos;10.14&apos; rx=&apos;0.85&apos; opacity=&apos;0.5&apos; transform=&apos;translate(0 3.01)&apos; fill=&apos;url(%23file-word_svg__a)&apos;%3E%3C/rect%3E%3Cpath d=&apos;M4.33 10.42V10.43a2.09 2.09 0 01.07-.33l.88-3.84h1.15l1.01 3.75c.058.233.098.47.12.71 0-.2.05-.43.1-.69l.73-3.8h1.05l-1.29 5.5H6.94l-.88-3.64c0-.11-.05-.24-.08-.41a8.48 8.48 0 01-.06-.37c0 .09 0 .22-.06.4-.06.18-.05.3-.07.39L5 11.76H3.71l-1.3-5.5h1.06l.8 3.85c.026.102.046.206.06.31z&apos; fill=&apos;%23FFF&apos;%3E%3C/path%3E%3C/g%3E%3C/svg%3E&quot;);"></div><a href="media/%E7%89%A9%E8%81%941702+0919170210+%E4%B9%94%E6%A5%A0+fibonacci.docx"><span>物联1702+0919170210+乔楠+Fibonacci.docx</span><span data-size="472.03 kB" class="file-size"></span></a></div></article><footer></footer></body></html>

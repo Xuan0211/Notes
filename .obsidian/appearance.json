@@ -1,0 +1,12 @@
+{
+  "accentColor": "",
+  "theme": "moonstone",
+  "enabledCssSnippets": [
+    "katex.min",
+    "modern-norm.min",
+    "prism.min",
+    "wolai"
+  ],
+  "nativeMenus": false,
+  "cssTheme": "Minimal"
+}

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=Edge"/><link rel="stylesheet" type="text/css" href="../css/modern-norm.min.css"/><link rel="stylesheet" type="text/css" href="../css/prism.min.css"/><link rel="stylesheet" type="text/css" href="../css/katex.min.css"/><link rel="stylesheet" type="text/css" href="../css/wolai.css"/><title>汇编实验报告：查找匹配字符串 - wolai 笔记</title><link rel="shortcut icon" href="data:image/svg+xml,%3Csvg xmlns=&apos;http://www.w3.org/2000/svg&apos; viewBox=&apos;0 0 800 800&apos;%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill:%23fff;%7D%3C/style%3E%3C/defs%3E%3Cg%3E%3Cpath class=&apos;cls-1&apos; d=&apos;M610.08,0c66,0,90,6.88,114.13,19.79a134.62,134.62,0,0,1,56,56l2.28,4.4C793.93,103,800,127.88,800,189.92V610.08l-.08,11.56c-.78,57.38-7.58,79.89-19.71,102.57a134.62,134.62,0,0,1-56,56l-4.4,2.28C697,793.93,672.12,800,610.08,800H189.92l-11.56-.08c-57.38-.78-79.89-7.58-102.57-19.71a134.62,134.62,0,0,1-56-56l-2.28-4.4C6.44,697.75.4,673.72,0,616L0,189.92c0-66,6.88-90,19.79-114.13a134.62,134.62,0,0,1,56-56l4.4-2.28C102.25,6.44,126.28.4,184,0Z&apos;/%3E%3Cpath d=&apos;M610.08,0c66,0,90,6.88,114.13,19.79a134.62,134.62,0,0,1,56,56l2.28,4.4C793.93,103,800,127.88,800,189.92V610.08l-.08,11.56c-.78,57.38-7.58,79.89-19.71,102.57a134.62,134.62,0,0,1-56,56l-4.4,2.28C697,793.93,672.12,800,610.08,800H189.92l-11.56-.08c-57.38-.78-79.89-7.58-102.57-19.71a134.62,134.62,0,0,1-56-56l-2.28-4.4C6.44,697.75.4,673.72,0,616L0,189.92c0-66,6.88-90,19.79-114.13a134.62,134.62,0,0,1,56-56l4.4-2.28C102.25,6.44,126.28.4,184,0Zm4.72,88.9H185.2L172.42,89c-32.78.62-43.68,3.24-54.71,9.14a45.84,45.84,0,0,0-19.54,19.54c-6.61,12.36-9.11,24.55-9.27,67.49V614.8L89,627.58c.62,32.78,3.24,43.68,9.14,54.71a45.84,45.84,0,0,0,19.54,19.54c12.36,6.61,24.55,9.11,67.49,9.27H610.08c46.79,0,59.41-2.44,72.21-9.28a45.84,45.84,0,0,0,19.54-19.54c6.61-12.36,9.11-24.55,9.27-67.49V189.92c0-46.79-2.44-59.41-9.28-72.21a45.84,45.84,0,0,0-19.54-19.54C669.93,91.56,657.74,89.06,614.8,88.9ZM233.33,493.33A73.34,73.34,0,1,1,160,566.67,73.35,73.35,0,0,1,233.33,493.33Z&apos;/%3E%3C/g%3E%3C/svg%3E"></link></head><body><header><div class="image"></div><div class="title"><div class="banner"><div class="icon"></div></div><div data-title="汇编实验报告：查找匹配字符串" class="main-title"></div></div></header><article><div id="kzUWhm6XZExrJkVqLKQopC" class="wolai-block wolai-simple-table"><table><tbody><tr><td style="width: 176px"><span class="inline-wrap">实验内容：</span></td><td style="width: 531px"><span class="inline-wrap">查找匹配字符串</span></td></tr><tr><td style="width: 176px"><span class="inline-wrap">姓 名：</span></td><td style="width: 531px"><span class="inline-wrap">许愿</span></td></tr><tr><td style="width: 176px"><span class="inline-wrap">学 号：</span></td><td style="width: 531px"><span class="inline-wrap">8201210729</span></td></tr><tr><td style="width: 176px"><span class="inline-wrap">专业班级：</span></td><td style="width: 531px"><span class="inline-wrap">计算机科学与技术卓越人才培养 T2101</span></td></tr><tr><td style="width: 176px"><span class="inline-wrap">指导教师：</span></td><td style="width: 531px"><span class="inline-wrap">贺建飚</span></td></tr></tbody></table></div><h2 id="jRDPxToNfEt31QdstcAUjf" class="wolai-block"><span class="inline-wrap"><b>一、</b></span><span class="inline-wrap"> </span><span class="inline-wrap"><b>设计说明</b></span></h2><h3 id="4eSLfHhPvttpt4AEAsRP2n" class="wolai-block"><span class="inline-wrap">1.1</span><span class="inline-wrap"><b>程序</b></span><span class="inline-wrap">名：</span><span class="inline-wrap">查找匹配字符串</span></h3><h3 id="w8F4h1UZa7ZCS3GFrdVpmc" class="wolai-block"><span class="inline-wrap">1.2</span><span class="inline-wrap"><b>程序</b></span><span class="inline-wrap">功能</span></h3><div id="98RoNdKuejuvbyCNc7TwFb" class="wolai-block wolai-text"><div><span class="inline-wrap">程序接收用户键入的一个关键字以及一个句子。如果句子中不包含关键字则显示</span><span class="inline-wrap"><code>No match！</code></span><span class="inline-wrap">；如果句子中包含关键字则显示</span><span class="inline-wrap"><code>Match</code></span><span class="inline-wrap">，且把该字在句子中的位置用</span><span class="inline-wrap"><code>十六进制数</code></span><span class="inline-wrap">显示出来。</span></div></div><h3 id="wG5xYonTf7KoUDuDLU24vu" class="wolai-block"><span class="inline-wrap">1.3 数据结构及主要符号</span></h3><code-block id="83pSFF8YMCnBvjMeHMeokG" class="wolai-block"><div class="wolai-pre"><div data-lang="6502 Assembly" class="marker"></div><pre>输入提示符：
+string1   db  <span class="token string">'Enter keyword:$'</span>
+string2   db  <span class="token string">'Enter sentence:$'</span>
+输出提示符<span class="token operator">-</span>匹配：
+mess1   db  <span class="token string">'Match at location:'</span><span class="token punctuation">,</span><span class="token operator">?</span><span class="token punctuation">,</span><span class="token operator">?</span><span class="token punctuation">,</span><span class="token string">' H of the sentence'</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+输出提示符<span class="token operator">-</span>不匹配：
+mess2   db    <span class="token string">'No match.'</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'$'</span>  
+输出<span class="token operator">-</span>换行：
+nextline db  <span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'$'</span><span class="token punctuation">;</span>回车 换行
+输出<span class="token operator">-</span>结果：
+num db <span class="token operator">?</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+子串：
+keyword     label   byte
+  子串最长长度
+  maxKeyLen     db      <span class="token number">5</span>
+  子串长度
+  <span class="token maybe-class-name">KeyLen</span>     db      <span class="token operator">?</span>       
+  子串    
+  keyd   db      <span class="token number">5</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token string">'$'</span><span class="token punctuation">)</span>  
+主串：
+sentence     label   byte
+  主串最长长度：
+  maxSenLen     db      <span class="token number">10</span>
+  主串长度：
+  <span class="token maybe-class-name">SenLen</span>     db      <span class="token operator">?</span>    
+  主串       
+  sente   db      <span class="token number">10</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token string">'$'</span><span class="token punctuation">)</span>   
+</pre></div></code-block><h3 id="hSJtSHxdsjqMF341ZjSj5z" class="wolai-block"><span class="inline-wrap">1.4 算法说明</span></h3><div id="oy85d2p8MTPm8tX8k2PSZ2" class="wolai-block wolai-text"><div><span class="inline-wrap">本算法使用通过<span class="jill"></span>int 21H 断点来进行字符串的输入和输出，并且使用</span><span class="inline-wrap"><code>repz cmpsb</code></span><span class="inline-wrap">进行比较。并且采用<span class="jill"></span>Brute Force 算法进行子串和主串匹配。基本思想就是将主串第<span class="jill"></span>di<span class="jill"></span>个字符与匹配串的第一个字符进行比较，若相等，继续将主串的下一个字符与匹配串的下一个字符进行比较，若不相等，从主串的<span class="jill"></span>di + 1 位置开始与匹配串的第一个字符进行比较，重复前面的比较模式，直到得到结果。</span></div></div><h2 id="6fCYmGEpshScdgGN8GHY6R" class="wolai-block"><span class="inline-wrap"><b>二、</b></span><span class="inline-wrap"> </span><span class="inline-wrap"><b>调试说明</b></span></h2><h3 id="fQfUGAJvokVYJpnT2isu8F" class="wolai-block"><span class="inline-wrap">2.1</span><span class="inline-wrap"><b>实验结果</b></span></h3><div id="qNmSZENSjL1ZhMKnjK97vV" class="wolai-block"><figure class="wolai-center" style="width: 100%"><img src="media/image.png" style="width: 100%"/></figure></div><h3 id="tuJ8mKEdu1FsJmkiFW6jQ9" class="wolai-block"><span class="inline-wrap">2.2</span><span class="inline-wrap"><b>实验调试</b></span></h3><div id="kKv3gyk9QNnoq5tZJnK864" class="wolai-block wolai-text"><div><span class="inline-wrap">由调试器我们可以看到，代码被存在<span class="jill"></span>04BF<span class="jill"></span>段中，数据被存在<span class="jill"></span>04B0<span class="jill"></span>段中，栈数据被存在<span class="jill"></span>04BA<span class="jill"></span>段中。</span></div></div><div id="7hTBy3UiHJAe1ko8igomuD" class="wolai-block"><figure class="wolai-center" style="width: 100%"><img src="media/image_1.png" style="width: 100%"/></figure></div><div id="iDvPwii6GM12LADTS58zmL" class="wolai-block wolai-text"><div><span class="inline-wrap">利用-d<span class="jill"></span>指令，我们可以查询到数据段</span></div></div><div id="89FJiGt5LyUnPV4WYFkJj1" class="wolai-block"><figure class="wolai-center" style="width: 100%"><img src="media/image_2.png" style="width: 100%"/></figure></div><div id="fVUyN3v59SV6C78xWBNF2B" class="wolai-block wolai-text"><div><span class="inline-wrap">运行完毕之后，我们不难发现，答案很好的被储存在了<span class="jill"></span>04B0：32-33<span class="jill"></span>的字符串中</span></div></div><div id="n6zzPEBEFMGFRmYez5eyEe" class="wolai-block"><figure class="wolai-center" style="width: 100%"><img src="media/image_3.png" style="width: 100%"/></figure></div><h3 id="8snsj5yCmiigfzUkHmM8" class="wolai-block"><span class="inline-wrap">2.3 问题与</span><span class="inline-wrap"><b>解决</b></span><span class="inline-wrap">方案</span></h3><h4 id="5zPq4nAAxufVTHJSvRnebV" class="wolai-block"><span class="inline-wrap">2.3.1<span class="jill"></span>如何进行字符串的比较？</span></h4><div id="p8uGVJgR7kzwhE4bhkyatD" class="wolai-block wolai-text"><div><span class="inline-wrap">采用</span><span class="inline-wrap"><code>repz cmpsb</code></span><span class="inline-wrap">命令进行自动比较。CMPSB<span class="jill"></span>指令，是用 DS:[SI] 所指的字节单元内容，减去 ES:[DI] 所指的字节单元的内容。如果<span class="jill"></span>ds:si<span class="jill"></span>和<span class="jill"></span>es:di<span class="jill"></span>所指向的两个字节相等，则继续比较。否则退出。</span></div></div><div id="9L53hBCHAmDJJ9FFWQfFrd" class="wolai-block wolai-text"><div><span class="inline-wrap">基本的使用格式是：</span></div></div><code-block id="kptXhzbkDzYF1fExZSTmZb" class="wolai-block"><div class="wolai-pre"><div data-lang="6502 Assembly" class="marker"></div><pre><span class="token punctuation">;</span>次数      
+mov     cl<span class="token punctuation">,</span><span class="token maybe-class-name">KeyLen</span> 
+<span class="token punctuation">;</span>源串
+mov     si<span class="token punctuation">,</span>offset keyd
+<span class="token punctuation">;</span>目标串
+mov     di<span class="token punctuation">,</span>offset sentence
+
+repz    cmpsb  
+jz      find
+<span class="token punctuation">;</span><span class="token operator">/</span>jb 如果si<span class="token operator">></span>di        </pre></div></code-block><h4 id="abNRE3ZMYPTRTbZhY5CewB" class="wolai-block"><span class="inline-wrap">2.3.2 如何转化为<span class="jill"></span>16<span class="jill"></span>进制进行输出？</span></h4><div id="wsZcitZkGC6GxX3jYfhb5k" class="wolai-block wolai-text"><div><span class="inline-wrap">由于输入主串的长度被限制在<span class="jill"></span>10<span class="jill"></span>以内，所以得到的答案一定是一个小于<span class="jill"></span>10<span class="jill"></span>的数，所以满足一位十六进制数的范围，采取一次除法，就可以得到</span><span class="inline-wrap">十六</span><span class="inline-wrap">进制的两位。具体代码实现如下：</span></div></div><code-block id="2UppHfRCjD6Ms2TEKzwh3b" class="wolai-block"><div class="wolai-pre"><div data-lang="6502 Assembly" class="marker"></div><pre>mov     ax<span class="token punctuation">,</span>bx
+mov     bh<span class="token punctuation">,</span><span class="token number">16</span>
+div     bh
+<span class="token punctuation">;</span>商在al中 并求<span class="token constant">ASCLL</span>码 也就是<span class="token number">16</span>进制高位
+add     al<span class="token punctuation">,</span><span class="token number">48</span>
+<span class="token punctuation">;</span>余数在ah中 并求<span class="token constant">ASCLL</span>码 也就是<span class="token number">16</span>进制低位
+add     ah<span class="token punctuation">,</span><span class="token number">48</span>
+</pre></div></code-block><h2 id="uD1a4JTgbBsGSvw6f1bZ44" class="wolai-block"><span class="inline-wrap"><b>三、</b></span><span class="inline-wrap"> </span><span class="inline-wrap"><b>程序框图</b></span></h2><div id="crqzZBvkEu2Ursd3tgTz9T" class="wolai-block"><figure class="wolai-center" style="width: 100%"><img src="media/image_4.png" style="width: 398px"/></figure></div><h2 id="9AUdAioWV4bd7nV7f6fvxN" class="wolai-block"><span class="inline-wrap"><b>四、</b></span><span class="inline-wrap"> </span><span class="inline-wrap"><b>程序清单</b></span></h2><div id="i3bGrAuAu3FzV1jiMRT5UM" class="wolai-block wolai-text"><div><span class="inline-wrap"><b>实验代码如下：</b></span></div></div><code-block id="tkNUhDTMAu9DDVS2AHo7jY" class="wolai-block"><div class="wolai-pre"><div data-lang="6502 Assembly" class="marker"></div><pre>datas  segment
+
+        <span class="token punctuation">;</span>定义输入提示符 
+        string1   db  <span class="token string">'Enter keyword:$'</span>
+        string2   db  <span class="token string">'Enter sentence:$'</span>
+        <span class="token punctuation">;</span>定义输出
+        mess1   db  <span class="token string">'Match at location:'</span><span class="token punctuation">,</span><span class="token operator">?</span><span class="token punctuation">,</span><span class="token operator">?</span><span class="token punctuation">,</span><span class="token string">' H of the sentence'</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+        mess2   db    <span class="token string">'No match.'</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'$'</span>  
+
+          nextline db  <span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'$'</span><span class="token punctuation">;</span>回车 换行
+        num db <span class="token operator">?</span><span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token string">'$'</span>
+
+        keyword     label   byte
+                maxKeyLen     db      <span class="token number">5</span>
+                <span class="token maybe-class-name">KeyLen</span>     db      <span class="token operator">?</span>           
+                keyd   db      <span class="token number">5</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token string">'$'</span><span class="token punctuation">)</span>    
+        sentence     label   byte
+                maxSenLen     db      <span class="token number">10</span>
+                <span class="token maybe-class-name">SenLen</span>     db      <span class="token operator">?</span>           
+                sente   db      <span class="token number">10</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token string">'$'</span><span class="token punctuation">)</span>   
+datas  ends
+
+stacks segment
+    dw <span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span>  
+    <span class="token maybe-class-name">SEnd</span> label db
+stacks ends
+
+
+codes  segment 
+        assume  cs<span class="token operator">:</span>codes<span class="token punctuation">,</span>ds<span class="token operator">:</span>datas<span class="token punctuation">,</span>es<span class="token operator">:</span>datas
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+main    proc    far
+        <span class="token punctuation">;</span>初始化栈
+        mov ax<span class="token punctuation">,</span>stacks
+        mov ss<span class="token punctuation">,</span>ax
+        mov sp<span class="token punctuation">,</span>offset <span class="token maybe-class-name">SEnd</span>
+
+        <span class="token punctuation">;</span>初始化代码段
+        mov     ax<span class="token punctuation">,</span>datas
+        mov     ds<span class="token punctuation">,</span>ax
+        
+        <span class="token punctuation">;</span>初始化拓展段
+        mov     es<span class="token punctuation">,</span>ax
+start<span class="token operator">:</span>  
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>输入<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+        <span class="token punctuation">;</span>输入子串
+           <span class="token punctuation">;</span>输出 提示符
+            mov     ah<span class="token punctuation">,</span><span class="token number">9</span>H
+            mov     dx<span class="token punctuation">,</span>offset string1
+            int     <span class="token number">21</span>H
+            <span class="token punctuation">;</span>输入 keyword
+            mov     dx<span class="token punctuation">,</span>offset keyword 
+            mov     ah<span class="token punctuation">,</span><span class="token number">0</span>ah  
+            int     <span class="token number">21</span>h
+            <span class="token punctuation">;</span>如果没有输入 直接退出
+            cmp     <span class="token maybe-class-name">KeyLen</span><span class="token punctuation">,</span><span class="token number">0</span>
+            je      exit
+            <span class="token punctuation">;</span>输出 换行
+            mov     dx<span class="token punctuation">,</span>offset nextline
+            mov     ah<span class="token punctuation">,</span><span class="token number">09</span>
+            int     <span class="token number">21</span>h
+        <span class="token punctuation">;</span>输入主串
+            <span class="token punctuation">;</span>输出 提示符
+            mov     ah<span class="token punctuation">,</span><span class="token number">9</span>H
+            mov     dx<span class="token punctuation">,</span>offset string2
+            int     <span class="token number">21</span>H
+            <span class="token punctuation">;</span>输入 sentence
+            mov     dx<span class="token punctuation">,</span>offset sentence
+            mov     ah<span class="token punctuation">,</span><span class="token number">0</span>ah  
+            int     <span class="token number">21</span>h
+            <span class="token punctuation">;</span>如果没有输入 直接退出
+            cmp     <span class="token maybe-class-name">SenLen</span><span class="token punctuation">,</span><span class="token number">0</span>
+            je      exit
+            <span class="token punctuation">;</span>输出 换行
+            mov     dx<span class="token punctuation">,</span>offset nextline 
+            mov     ah<span class="token punctuation">,</span><span class="token number">09</span>
+            int     <span class="token number">21</span>h     
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span> 
+        mov     si<span class="token punctuation">,</span>offset keyd
+        mov     bx<span class="token punctuation">,</span>offset sente
+        mov     di<span class="token punctuation">,</span>bx
+        cld
+
+        <span class="token punctuation">;</span>外循环循环SenLen <span class="token operator">-</span> <span class="token maybe-class-name">KeyLen</span> <span class="token operator">+</span> <span class="token number">1</span>次
+        mov     ch<span class="token punctuation">,</span><span class="token number">0</span>
+        mov     cl<span class="token punctuation">,</span><span class="token maybe-class-name">SenLen</span>  
+        sub     cl<span class="token punctuation">,</span><span class="token maybe-class-name">KeyLen</span>
+        inc     cx 
+ 
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>外循环<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+comp<span class="token operator">:</span>
+        push    cx
+        push    di
+
+        mov     cl<span class="token punctuation">,</span><span class="token maybe-class-name">KeyLen</span> <span class="token punctuation">;</span>关键字长度，一个字节
+        mov     si<span class="token punctuation">,</span>offset keyd
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>内循环<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+        <span class="token punctuation">;</span>如果ds<span class="token operator">:</span>si和es<span class="token operator">:</span>di所指向的两个字节相等，则继续比较。
+        <span class="token punctuation">;</span>repz cmpsb
+        <span class="token punctuation">;</span><span class="token constant">CMPSB</span>指令，是用 <span class="token constant">DS</span><span class="token operator">:</span><span class="token punctuation">[</span><span class="token constant">SI</span><span class="token punctuation">]</span> 所指的字节单元内容，减去 <span class="token constant">ES</span><span class="token operator">:</span><span class="token punctuation">[</span><span class="token constant">DI</span><span class="token punctuation">]</span> 所指的字节单元的内容。
+        repz    cmpsb  
+        jz      find
+<span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>内循环<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+
+        pop     di
+        pop     cx
+        inc     di      
+loop    comp
+ <span class="token punctuation">;</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>外循环<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+
+<span class="token maybe-class-name">Nfind</span><span class="token operator">:</span>
+        lea     dx<span class="token punctuation">,</span>mess2 
+        mov     ah<span class="token punctuation">,</span><span class="token number">09</span>
+        int     <span class="token number">21</span>h
+        jmp     exit 
+ 
+find<span class="token operator">:</span>   
+        <span class="token punctuation">;</span>得到十进制的位置
+        pop     di
+        pop     cx
+        sub     di<span class="token punctuation">,</span>bx
+        mov     bx<span class="token punctuation">,</span>di
+        inc     bx 
+        <span class="token punctuation">;</span>变<span class="token number">16</span>进制
+        mov     ax<span class="token punctuation">,</span>bx
+        mov     bh<span class="token punctuation">,</span><span class="token number">16</span>
+        div     bh
+        <span class="token punctuation">;</span>商在al中 并求<span class="token constant">ASCLL</span>码 也就是<span class="token number">16</span>进制高位
+        add     al<span class="token punctuation">,</span><span class="token number">48</span>
+        <span class="token punctuation">;</span>余数在ah中 并求<span class="token constant">ASCLL</span>码 也就是<span class="token number">16</span>进制低位
+        add     ah<span class="token punctuation">,</span><span class="token number">48</span>
+        <span class="token punctuation">;</span>合成输出语句
+        mov     <span class="token punctuation">[</span>mess1<span class="token operator">+</span><span class="token number">18</span><span class="token punctuation">]</span><span class="token punctuation">,</span>al
+        mov     <span class="token punctuation">[</span>mess1<span class="token operator">+</span><span class="token number">19</span><span class="token punctuation">]</span><span class="token punctuation">,</span>ah 
+        <span class="token punctuation">;</span>输出
+        mov    dx<span class="token punctuation">,</span>offset mess1 
+        mov     ah<span class="token punctuation">,</span><span class="token number">09</span>
+        int     <span class="token number">21</span>h
+        <span class="token punctuation">;</span>下一轮
+        jmp     start 
+exit<span class="token operator">:</span>
+        <span class="token punctuation">;</span>退出
+        mov ah<span class="token punctuation">,</span><span class="token number">4</span>ch
+        int <span class="token number">21</span>h
+main    endp
+
+codes  ends            
+        end     main 
+ 
+ 
+ 
+
+</pre></div></code-block></article><footer></footer></body></html>
